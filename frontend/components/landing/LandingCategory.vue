@@ -1,13 +1,7 @@
 <template>
   <section class="landing-category">
     <div class="container">
-      <h2 class="landing-category__title">
-        Наиболее <span class="blue">популярные категории</span>
-      </h2>
-
-      <p class="landing-category__subtitle">
-        Various versions have evolved over the years, sometimes by accident,
-      </p>
+      <LandingEntrance :title="title" :subtitle="subtitle" />
 
       <ul class="landing-category__list">
         <li
@@ -33,6 +27,8 @@
 </template>
 
 <script setup lang="ts">
+import LandingEntrance from './common/LandingEntrance.vue'
+
 const categories = ref<{ icon: string, title: string, link: string }[]>([
   {
     icon: 'carbon:pen',
@@ -40,6 +36,9 @@ const categories = ref<{ icon: string, title: string, link: string }[]>([
     link: '/'
   }
 ])
+
+const title = ref('Наиболее <span class="blue">популярные категории</span>')
+const subtitle = ref('Various versions have evolved over the years, sometimes by accident')
 </script>
 
 <style lang="sass" scoped>
@@ -47,24 +46,9 @@ const categories = ref<{ icon: string, title: string, link: string }[]>([
   padding: 80px 0
   background-color: $second-primary
 
-  &__title
-    margin-bottom: 16px
-    font-size: 48px
-    line-height: 56px
-    font-weight: 600
-
-    & > .blue
-      color: $second-primary-500
-
-  &__subtitle
-    font-size: 20px
-    line-height: 28px
-    color: $gray-500
-
   &__list
     display: flex
     flex-wrap: wrap
-    margin-top: 50px
     margin-bottom: -24px
     margin-right: -24px
 
