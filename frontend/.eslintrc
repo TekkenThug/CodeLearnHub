@@ -1,0 +1,7 @@
+{
+  "extends": ["@nuxtjs/eslint-config-typescript"],
+  "rules": {
+    "semi-style": "warn",
+    "space-before-function-paren": ["error", "never"]
+  }
+}
