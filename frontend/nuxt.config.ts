@@ -11,10 +11,17 @@ export default defineNuxtConfig({
       ]
     }
   },
-  css: ['normalize.css'],
+
+  css: ['normalize.css', '@splidejs/vue-splide/css'],
+
   modules: [
     ['nuxt-icon', { size: '24px' }]
   ],
+
+  plugins: [
+    '@/plugins/vue-splider'
+  ],
+
   vite: {
     css: {
       preprocessorOptions: {
