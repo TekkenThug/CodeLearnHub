@@ -56,7 +56,7 @@ const facts = ref<{ icon: string, gradient: string, value: string, caption: stri
 
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 .landing-facts
   padding: 50px 0
   background-color: $second-primary

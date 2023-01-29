@@ -42,7 +42,7 @@
 const searchValue = ref('')
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 .landing-start
   height: 100vh
   background-color: $blue
