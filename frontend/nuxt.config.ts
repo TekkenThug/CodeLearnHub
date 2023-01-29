@@ -14,9 +14,7 @@ export default defineNuxtConfig({
 
   css: ['normalize.css', '@splidejs/vue-splide/css'],
 
-  modules: [
-    ['nuxt-icon', { size: '24px' }]
-  ],
+  modules: ['nuxt-icon'],
 
   plugins: [
     '@/plugins/vue-splider'
