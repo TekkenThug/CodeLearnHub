@@ -59,6 +59,7 @@ const facts = ref<{ icon: string, gradient: string, value: string, caption: stri
 <style lang="sass">
 .landing-facts
   padding: 50px 0
+  background-color: $second-primary
 
   &__list
     display: flex
