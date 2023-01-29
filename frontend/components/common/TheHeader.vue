@@ -55,10 +55,11 @@ const navigation = ref<{ name: string, link: string }[]>([
 <style lang="sass" scoped>
 .header
   position: fixed
+  z-index: $z-header
   width: 100%
   left: 0
   top: 0
-  padding: 24px 0
+  padding: 14px 0
   background-color: $blue
   color: $white
 
