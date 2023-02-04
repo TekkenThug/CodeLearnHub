@@ -21,15 +21,15 @@ const props = defineProps<{
 
   &__title
     margin-bottom: 16px
-    font-size: 48px
-    line-height: 56px
+    font-size: $font-heading
+    line-height: $lh-heading
     font-weight: 600
 
     & :deep(.blue)
       color: $second-primary-500
 
   &__subtitle
-    font-size: 20px
-    line-height: 28px
+    font-size: $font-body-large
+    line-height: $lh-body-large
     color: $gray-500
 </style>
