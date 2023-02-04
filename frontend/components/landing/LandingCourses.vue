@@ -165,8 +165,8 @@ const courses = ref<CourseCardShort[]>([
 
   &__slide-title
     color: $gray-700
-    font-size: 20px
-    line-height: $lh-body-regular
+    font-size: $font-body-large
+    line-height: $lh-body-large
     font-weight: 500
     display: -webkit-box
     overflow: hidden
@@ -193,8 +193,8 @@ const courses = ref<CourseCardShort[]>([
   &__slide-price
     color: $black
     font-weight: 600
-    font-size: 24px
-    line-height: 32px
+    font-size: $font-subheading
+    line-height: $lh-subheading
 
   &__slide-btn
     @include trans
