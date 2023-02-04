@@ -12,12 +12,17 @@ export default defineNuxtConfig({
     }
   },
 
-  css: ['normalize.css', '@splidejs/vue-splide/css'],
+  css: [
+    'normalize.css',
+    'vue-final-modal/style.css',
+    '@splidejs/vue-splide/css'
+  ],
 
   modules: ['nuxt-icon'],
 
   plugins: [
-    '@/plugins/vue-splider'
+    '@/plugins/vue-splider',
+    '@/plugins/modal'
   ],
 
   vite: {
