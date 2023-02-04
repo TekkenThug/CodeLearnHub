@@ -78,8 +78,6 @@ const navigation = ref<{ name: string, link: string }[]>([
 
     a
       @include trans
-      font-size: 16px
-      line-height: 24px
       cursor: pointer
 
       &:hover
