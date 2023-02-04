@@ -63,8 +63,8 @@ const searchValue = ref('')
 
   &__suptitle
     margin-bottom: 32px
-    font-size: 24px
-    line-height: 32px
+    font-size: $font-subheading
+    line-height: $lh-subheading
     font-weight: 500
     text-transform: uppercase
     color: $secondary-500
@@ -72,14 +72,14 @@ const searchValue = ref('')
   &__title
     margin-bottom: 24px
     font-weight: 600
-    font-size: 34px
-    line-height: 42px
+    font-size: $font-heading
+    line-height: $lh-heading
     color: $white
 
   &__subtitle
     margin-bottom: 32px
-    font-size: 18px
-    line-height: 22px
+    font-size: $font-body-large
+    line-height: $lh-body-large
     color: $gray-100
 
   &__image
