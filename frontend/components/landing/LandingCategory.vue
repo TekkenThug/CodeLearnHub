@@ -64,7 +64,7 @@ const subtitle = ref('Various versions have evolved over the years, sometimes by
     background-color: $white
     border-radius: 22px
     border: 2px solid transparent
-    padding: 16px 24px
+    padding: 12px 20px
 
     &:hover
       border-color: $secondary-500
@@ -96,8 +96,8 @@ const subtitle = ref('Various versions have evolved over the years, sometimes by
       opacity: .38
 
     span
-      font-size: 20px
-      line-height: 28px
+      font-size: $font-body-large
+      line-height: $lh-body-large
       font-weight: 500
 
   &__item-right
