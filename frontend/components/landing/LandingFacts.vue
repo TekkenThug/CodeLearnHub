@@ -58,7 +58,7 @@ const facts = ref<{ icon: string, gradient: string, value: string, caption: stri
 
 <style lang="sass" scoped>
 .landing-facts
-  padding: 50px 0
+  padding: 40px 0
   background-color: $second-primary
 
   &__list
@@ -89,12 +89,12 @@ const facts = ref<{ icon: string, gradient: string, value: string, caption: stri
 
   &__item-value
     font-weight: 600
-    font-size: 24px
-    line-height: 32px
+    font-size: $font-subheading
+    line-height: $lh-subheading
     color: $black
 
   &__item-caption
-    font-size: 18px
-    line-height: 21px
+    font-size: $font-body-large
+    line-height: $lh-body-large
     color: $gray-600
 </style>
