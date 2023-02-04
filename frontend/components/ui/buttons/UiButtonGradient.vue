@@ -7,7 +7,6 @@
 <style lang="sass">
 .ui-button-gradient
   @include trans
-  position: absolute
   display: flex
   justify-content: center
   align-items: center
