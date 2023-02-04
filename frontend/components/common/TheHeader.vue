@@ -30,7 +30,7 @@
             <span>Войти</span>
           </button>
 
-          <UiButtonGradient class="header__register-btn">
+          <UiButtonGradient>
             Зарегистрироваться
           </UiButtonGradient>
         </div>
@@ -98,10 +98,4 @@ const navigation = ref<{ name: string, link: string }[]>([
 
     span
       margin-left: 8px
-
-  &__register-btn
-    color: $white
-    padding: 12px 24px
-    background: linear-gradient(180deg, #FFC27A 0%, #FFA337 100%)
-    border-radius: 100px
 </style>
