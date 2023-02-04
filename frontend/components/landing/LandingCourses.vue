@@ -108,7 +108,7 @@ const courses = ref<CourseCardShort[]>([
 
 <style lang="sass" scoped>
 .landing-courses
-  padding: 80px 0
+  padding: $p-section-regular 0
 
   &__slide
     position: relative

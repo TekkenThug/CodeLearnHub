@@ -83,7 +83,7 @@ const students = ref([
 
 <style lang="sass" scoped>
 .landing-feedback
-  padding: 80px 0
+  padding: $p-section-regular 0
   background-color: #F8F4FF
 
   &__slide

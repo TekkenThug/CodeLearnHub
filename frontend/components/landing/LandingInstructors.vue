@@ -48,7 +48,7 @@ const instructors = ref([
 
 <style lang="sass" scoped>
 .landing-instructors
-  padding: 80px 0
+  padding: $p-section-regular 0
 
   &__slide
     position: relative

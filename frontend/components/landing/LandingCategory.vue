@@ -43,7 +43,7 @@ const subtitle = ref('Various versions have evolved over the years, sometimes by
 
 <style lang="sass" scoped>
 .landing-category
-  padding: 80px 0
+  padding: $p-section-regular 0
   background-color: $second-primary
 
   &__list
