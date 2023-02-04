@@ -88,7 +88,7 @@ const instructors = ref([
   &__slide-name
     color: $black
     font-size: 18px
-    line-height: $lh-regular-body
+    line-height: $lh-body-regular
     margin-bottom: 6px
 
   &__slide-work
