@@ -30,9 +30,9 @@
             <span>Войти</span>
           </button>
 
-          <button class="header__register-btn">
+          <UiButtonGradient class="header__register-btn">
             Зарегистрироваться
-          </button>
+          </UiButtonGradient>
         </div>
       </div>
     </div>
@@ -40,6 +40,8 @@
 </template>
 
 <script setup lang="ts">
+import UiButtonGradient from '~/components/ui/buttons/UiButtonGradient.vue'
+
 const navigation = ref<{ name: string, link: string }[]>([
   {
     name: 'Главная',
