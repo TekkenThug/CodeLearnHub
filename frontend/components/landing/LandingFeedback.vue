@@ -126,7 +126,7 @@ const students = ref([
 
   &__slide-name
     font-weight: 600
-    font-size: 18px
+    font-size: $font-body-large
     margin-bottom: 8px
 
   &__slide-quote
