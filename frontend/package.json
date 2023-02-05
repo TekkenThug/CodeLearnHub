@@ -21,6 +21,7 @@
     "@splidejs/vue-splide": "^0.6.12",
     "normalize.css": "^8.0.1",
     "sass": "^1.57.1",
+    "vee-validate": "^4.7.3",
     "vue-final-modal": "^4.0.0"
   }
 }
