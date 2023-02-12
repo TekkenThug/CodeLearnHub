@@ -1,3 +1,4 @@
+/* slide-fade */
 .slide-fade-enter-active
   transition: all 0.2s ease-out
 
@@ -7,4 +8,13 @@
 .slide-fade-enter-from,
 .slide-fade-leave-to
   transform: translateX(20px)
+  opacity: 0
+
+/* fade */
+.fade-enter-active,
+.fade-leave-active
+  transition: opacity 0.5s ease
+
+.fade-enter-from,
+.fade-leave-to
   opacity: 0
