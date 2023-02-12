@@ -59,6 +59,9 @@ const props = withDefaults(defineProps<Props>(), {
       border-color: $second-primary-500
 
   &__error
-    font-size: 14px
+    display: inline-block
+    margin-top: 5px
+    font-size: $font-body-tiny
+    line-height: $lh-body-tiny
     color: $error-500
 </style>
