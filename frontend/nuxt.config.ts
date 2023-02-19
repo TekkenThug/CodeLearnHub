@@ -6,6 +6,12 @@ export default defineNuxtConfig({
     strict: true
   },
 
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.NODE_ENV === 'production' ? process.env.PROD_API_URL : process.env.DEV_API_URL
+    }
+  },
+
   app: {
     head: {
       title: 'eDex',
@@ -19,15 +25,11 @@ export default defineNuxtConfig({
   css: [
     'normalize.css',
     'vue-final-modal/style.css',
-    '@splidejs/vue-splide/css'
+    '@splidejs/vue-splide/css',
+    'vue-toastification/dist/index.css'
   ],
 
   modules: ['nuxt-icon'],
-
-  plugins: [
-    '@/plugins/vue-splider',
-    '@/plugins/modal'
-  ],
 
   vite: {
     css: {
