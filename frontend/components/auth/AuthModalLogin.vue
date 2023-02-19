@@ -49,6 +49,7 @@ import { useField, useForm } from 'vee-validate'
 import { toFormValidator } from '@vee-validate/zod'
 import { z } from 'zod'
 import { REQUIRED_ERROR, EMAIL_ERROR } from '~/utils/data/validateErrors'
+import { useUserStore } from '~/stores/user'
 
 interface Events {
   (e: 'changeMode', value: 'register' | 'forgot'): void,
@@ -68,6 +69,7 @@ const validationSchema = toFormValidator(
   })
 )
 
+const store = useUserStore()
 const isLoading = ref(false)
 const { handleSubmit, errors } = useForm({ validationSchema })
 const { value: email } = useField<string>('email', 'isRequired', { validateOnValueUpdate: false })
@@ -76,7 +78,8 @@ const submitForm = handleSubmit((values) => {
   isLoading.value = true
 
   login({ email: values.email, password: values.password })
-    .then(() => {
+    .then(({ data }) => {
+      store.setUserData(data.data.user, true)
       emit('complete')
       navigateTo('/profile')
     })
