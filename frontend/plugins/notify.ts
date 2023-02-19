@@ -6,6 +6,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     maxToasts: 10,
     newestOnTop: true,
     position: 'bottom-right',
-    hideProgressBar: true
+    hideProgressBar: true,
+    containerClassName: 'notify'
   })
 })
