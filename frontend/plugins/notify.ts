@@ -5,6 +5,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     transition: 'Vue-Toastification__fade',
     maxToasts: 10,
     newestOnTop: true,
-    position: 'bottom-right'
+    position: 'bottom-right',
+    hideProgressBar: true
   })
 })
