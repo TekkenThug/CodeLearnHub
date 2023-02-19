@@ -24,13 +24,13 @@
         </nav>
 
         <div class="header__right">
-          <button class="header__login-btn" @click="openLoginPopup">
+          <button class="header__login-btn" @click="processPopup('login')">
             <Icon name="ic:outline-lock" />
 
             <span>Войти</span>
           </button>
 
-          <UiButtonGradient @click="openRegisterPopup">
+          <UiButtonGradient @click="processPopup('register')">
             Зарегистрироваться
           </UiButtonGradient>
         </div>
@@ -43,15 +43,17 @@
 import { useModal } from 'vue-final-modal'
 import AuthModal from '~/components/auth/AuthModal.vue'
 
-const { open: openLoginPopup } = useModal({
-  component: AuthModal,
-  attrs: { initialMode: 'login' }
-})
+type PopupMode = 'login' | 'register'
 
-const { open: openRegisterPopup } = useModal({
+const popupMode = ref<PopupMode>('login')
+const { open: openPopup } = useModal({
   component: AuthModal,
-  attrs: { initialMode: 'register' }
+  attrs: { initialMode: popupMode }
 })
+const processPopup = (value: PopupMode) => {
+  popupMode.value = value
+  openPopup()
+}
 
 const navigation = ref<{ name: string, link: string }[]>([
   {
