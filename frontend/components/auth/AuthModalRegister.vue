@@ -65,8 +65,10 @@ import {
   PASSSWORD_ERROR
 } from '~/utils/data/validateErrors'
 
-defineEmits<{(e: 'changeMode', value: 'login'): void }>()
+const emit = defineEmits<{(e: 'changeMode', value: 'login'): void }>()
 
+const http = useHttp()
+const notify = useToast()
 const isLoading = ref(false)
 const validationSchema = toFormValidator(
   z.object({
@@ -81,11 +83,27 @@ const { value: firstName } = useField<string>('firstName', 'isRequired', { valid
 const { value: secondName } = useField<string>('secondName', 'isRequired', { validateOnValueUpdate: false })
 const { value: email } = useField<string>('email', 'isRequired', { validateOnValueUpdate: false })
 const { value: password } = useField<string>('password', 'isRequired', { validateOnValueUpdate: false })
-const submitForm = handleSubmit(async(values) => {
+const buttonIsDisabled = computed(() => !firstName.value || !secondName.value || !email.value || !password.value)
+const submitForm = handleSubmit((values) => {
   isLoading.value = true
 
-  const data = await useFetch(() => '/api/v1/auth', { method: 'POST', body: { email: values.email, password: values.password } })
+  http.post('/api/v1/auth/register', {
+    firstName: values.firstName,
+    secondName: values.secondName,
+    email: values.email,
+    password: values.password
+  })
+    .then(() => {
+      notify.success('Регистрация прошла успешно! Проверьте электронную почту и подтвердите email')
+      emit('changeMode', 'login')
+    })
+    .catch((e) => {
+      if (e?.response?.data) {
+        notify.error(e.response.data.error || e.response.data.message)
+      }
+    })
+    .finally(() => {
+      isLoading.value = false
+    })
 })
-
-const buttonIsDisabled = computed(() => !firstName.value || !secondName.value || !email.value || !password.value)
 </script>
