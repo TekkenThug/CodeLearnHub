@@ -40,7 +40,6 @@
 </template>
 
 <script setup lang="ts">
-import { useModal } from 'vue-final-modal'
 import AuthModal from '~/components/auth/AuthModal.vue'
 
 type PopupMode = 'login' | 'register'
