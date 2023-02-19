@@ -50,7 +50,16 @@ import { toFormValidator } from '@vee-validate/zod'
 import { z } from 'zod'
 import { REQUIRED_ERROR, EMAIL_ERROR } from '~/utils/data/validateErrors'
 
-defineEmits<{(e: 'changeMode', value: 'register' | 'forgot'): void }>()
+interface Events {
+  (e: 'changeMode', value: 'register' | 'forgot'): void,
+  (e: 'complete'): void
+}
+const emit = defineEmits<Events>()
+
+const buttonIsDisabled = computed(() => !email.value || !password.value)
+
+const { login } = await useAuth()
+const notify = useToast()
 
 const validationSchema = toFormValidator(
   z.object({
@@ -63,11 +72,20 @@ const isLoading = ref(false)
 const { handleSubmit, errors } = useForm({ validationSchema })
 const { value: email } = useField<string>('email', 'isRequired', { validateOnValueUpdate: false })
 const { value: password } = useField<string>('password', 'isRequired', { validateOnValueUpdate: false })
-const submitForm = handleSubmit(async(values) => {
+const submitForm = handleSubmit((values) => {
   isLoading.value = true
 
-  const data = await useFetch(() => '/api/v1/auth', { method: 'POST', body: { email: values.email, password: values.password } })
+  login({ email: values.email, password: values.password })
+    .then(() => {
+      emit('complete')
+      navigateTo('/profile')
+    })
+    .catch((e) => {
+      if (e.response?.data?.error) {
+        notify.error(e.response.data.error)
+      }
+    }).finally(() => {
+      isLoading.value = false
+    })
 })
-
-const buttonIsDisabled = computed(() => !email.value || !password.value)
 </script>
