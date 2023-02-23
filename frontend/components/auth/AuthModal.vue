@@ -8,7 +8,11 @@
     <div class="auth-modal__image" />
 
     <Transition name="slide-fade" mode="out-in">
-      <AuthModalLogin v-if="mode === 'login'" @change-mode="changeMode" />
+      <AuthModalLogin
+        v-if="mode === 'login'"
+        @change-mode="changeMode"
+        @complete="closeAll"
+      />
 
       <AuthModalRegister v-else-if="mode === 'register'" @change-mode="changeMode" />
 
@@ -22,12 +26,11 @@ import { VueFinalModal } from 'vue-final-modal'
 
 type Mode = 'login' | 'register' | 'forgot'
 
-const props = defineProps<{
-  initialMode: Mode
-}>()
+const props = defineProps<{initialMode: Mode}>()
 
 const mode = ref(props.initialMode)
 const changeMode = (value: Mode) => { mode.value = value }
+const { closeAll } = useVfm()
 </script>
 
 <style lang="sass">

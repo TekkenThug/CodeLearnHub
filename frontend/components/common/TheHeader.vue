@@ -24,15 +24,42 @@
         </nav>
 
         <div class="header__right">
-          <button class="header__login-btn" @click="processPopup('login')">
+          <NuxtLink
+            v-if="store.isAuth"
+            to="/profile"
+            class="header__login-btn"
+          >
+            <Icon name="ph:user-bold" />
+
+            <span>Профиль</span>
+          </NuxtLink>
+
+          <button
+            v-else
+            class="header__login-btn"
+            @click="processPopup('login')"
+          >
             <Icon name="ic:outline-lock" />
 
             <span>Войти</span>
           </button>
 
-          <UiButtonGradient @click="processPopup('register')">
+          <UiButtonGradient
+            v-if="!store.isAuth"
+            @click="processPopup('register')"
+          >
             Зарегистрироваться
           </UiButtonGradient>
+
+          <button
+            v-if="store.isAuth"
+            class="header__login-btn"
+            @click="logout"
+          >
+            <Icon name="ic:outline-lock-open" />
+
+            <span>Выйти</span>
+          </button>
         </div>
       </div>
     </div>
@@ -40,7 +67,10 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from '~/stores/user'
 import AuthModal from '~/components/auth/AuthModal.vue'
+
+const store = useUserStore()
 
 type PopupMode = 'login' | 'register'
 
@@ -52,6 +82,11 @@ const { open: openPopup } = useModal({
 const processPopup = (value: PopupMode) => {
   popupMode.value = value
   openPopup()
+}
+
+const http = useHttp()
+const logout = () => {
+  http.post('/logout', {}).then(() => store.logout())
 }
 
 const navigation = ref<{ name: string, link: string }[]>([
