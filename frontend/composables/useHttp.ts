@@ -1,6 +1,10 @@
 import axios from 'axios'
 
-const baseURL = (useRuntimeConfig()).baseURL
+/**
+ * TODO: Replace this on env
+ */
+const baseURL = 'http://localhost:80/'
+
 const httpInstance = axios.create({
   baseURL,
   withCredentials: true,
