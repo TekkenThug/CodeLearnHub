@@ -1,10 +1,20 @@
 <template>
   <div class="ui-input">
+    <div v-if="$slots.prefix" class="ui-input__prefix">
+      <slot name="prefix" />
+    </div>
+
     <input
       :type="type"
       :placeholder="props.placeholder"
       :value="modelValue"
       :name="name"
+      :class="[
+        'ui-input__field',
+        {
+          'ui-input__field--offset-left': $slots.prefix
+        }
+      ]"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     >
 
@@ -40,8 +50,14 @@ const props = withDefaults(defineProps<Props>(), {
 
 <style lang="sass">
 .ui-input
+  position: relative
 
-  input
+  &__prefix
+    position: absolute
+    top: 8px
+    left: 12px
+
+  &__field
     @include trans
     width: 100%
     display: block
@@ -57,6 +73,9 @@ const props = withDefaults(defineProps<Props>(), {
 
     &:focus
       border-color: $second-primary-500
+
+    &--offset-left
+      padding-left: 40px
 
   &__error
     display: inline-block
