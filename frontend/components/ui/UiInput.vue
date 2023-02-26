@@ -1,5 +1,5 @@
 <template>
-  <div class="ui-input">
+  <div :class="['ui-input', { 'ui-input--disabled': disabled }]">
     <div v-if="$slots.prefix" class="ui-input__prefix">
       <slot name="prefix" />
     </div>
@@ -15,6 +15,7 @@
           'ui-input__field--offset-left': $slots.prefix
         }
       ]"
+      :disabled="disabled"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     >
 
@@ -35,7 +36,8 @@ interface Props {
   type?: string
   modelValue?: string,
   errorMessage?: string,
-  rules?: string[]
+  rules?: string[],
+  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -44,13 +46,20 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: '',
   modelValue: '',
   errorMessage: '',
+  disabled: false,
   rules: () => ([])
 })
 </script>
 
 <style lang="sass">
 .ui-input
+  @include trans
   position: relative
+
+  &--disabled
+    opacity: .5
+    pointer-events: none
+    user-select: none
 
   &__prefix
     position: absolute
