@@ -23,5 +23,7 @@ import LandingInstructors from '~/components/landing/LandingInstructors.vue'
 import LandingFeedback from '~/components/landing/LandingFeedback.vue'
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
+.landing
+  margin-top: -#{$header-height}
 </style>
