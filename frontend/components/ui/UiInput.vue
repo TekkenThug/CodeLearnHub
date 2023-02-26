@@ -83,6 +83,9 @@ const props = withDefaults(defineProps<Props>(), {
     &:focus
       border-color: $second-primary-500
 
+    &:disabled
+      pointer-events: none
+
     &--offset-left
       padding-left: 40px
 
