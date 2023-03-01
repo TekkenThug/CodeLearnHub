@@ -24,13 +24,13 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const getUserInfo = () => {
-    http.get('/api/v1/user').then(({ data }) => {
+    return http.get('/api/v1/user').then(({ data }) => {
       if (!data) {
         return
       }
 
       setUserData(data, true)
-    })
+    }).catch(() => null)
   }
 
   return { user, isAuth, setUserData, logout, getUserInfo }
