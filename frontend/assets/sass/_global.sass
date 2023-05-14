@@ -7,12 +7,20 @@
 
 *
   box-sizing: border-box
+  scrollbar-width: none
+  -ms-overflow-style: none
 
   &:before,
   &:after
     box-sizing: inherit
 
+  &::-webkit-scrollbar
+    display: none
+
 body
+  position: relative
+  overflow: auto
+  height: 100vh
   font-family: $font-main
   font-size: $font-body-regular
   font-weight: 400

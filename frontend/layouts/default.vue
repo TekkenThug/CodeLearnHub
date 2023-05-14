@@ -23,4 +23,5 @@ import TheFooter from '~~/components/common/TheFooter.vue'
 
   &__content
     flex-grow: 1
+    padding-top: $header-height
 </style>
