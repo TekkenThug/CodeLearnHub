@@ -25,8 +25,7 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstName' => 'required|max:255',
-            'secondName' => 'required|max:255',
+            'nickname' => 'required|max:255',
             'email' => 'required|unique:users|email',
             'password' => ['required', Password::defaults()],
         ];
@@ -40,8 +39,7 @@ class StoreUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'firstName.required' => 'Поле обязательно к заполнению',
-            'secondName.required' => 'Поле обязательно к заполнению',
+            'nickname.required' => 'Поле обязательно к заполнению',
             'email.required' => 'Поле обязательно к заполнению',
             'email.email' => 'Поле должно быть формата e-mail',
             'email.unique' => 'Пользователь с таким email существует',

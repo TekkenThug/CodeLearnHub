@@ -18,10 +18,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name',
-        'second_name',
+        'nickname',
         'email',
         'password',
+        'role_id',
     ];
 
     /**
@@ -31,6 +31,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'role_id',
         'remember_token',
         'updated_at',
         'created_at',
@@ -45,4 +46,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }
