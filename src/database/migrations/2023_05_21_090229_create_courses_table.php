@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('programming_language');
+            $table->unsignedBigInteger('programming_language_id')->null();
+            $table->foreign('programming_language_id')->references('id')->on('program_languages');
             $table->double('rate')->default(0);
-            $table->unsignedInteger('lesson_count')->default(0);
+            $table->unsignedInteger('lessons_count')->default(0);
             $table->unsignedInteger('students_count')->default(0);
             $table->boolean('is_active')->default(false);
             $table->unsignedBigInteger('author_id');
