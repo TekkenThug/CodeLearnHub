@@ -1,21 +1,21 @@
 <template>
-  <div id="app">
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+    <div id="app">
+        <NuxtLayout>
+            <NuxtPage />
+        </NuxtLayout>
 
-    <ModalsContainer />
+        <ModalsContainer />
 
-    <transition name="fade">
-      <div
-        v-if="isLoading"
-        ref="loader"
-        class="loader"
-      >
-        <UiLoader />
-      </div>
-    </transition>
-  </div>
+        <transition name="fade">
+            <div
+                v-if="isLoading"
+                ref="loader"
+                class="loader"
+            >
+                <UiLoader />
+            </div>
+        </transition>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -29,20 +29,20 @@ const isLoading = ref(true)
 const loader = ref<null | HTMLElement>(null)
 
 const getStartData = async() => {
-  if (!loader.value) {
-    return
-  }
+    if (!loader.value) {
+        return
+    }
 
-  disableBodyScroll(loader.value)
+    disableBodyScroll(loader.value)
 
-  await http.get('/sanctum/csrf-cookie')
-  await store.getUserInfo()
+    await http.get('/sanctum/csrf-cookie')
+    await store.getUserInfo()
 
-  enableBodyScroll(loader.value)
-  isLoading.value = false
+    enableBodyScroll(loader.value)
+    isLoading.value = false
 }
 
 onMounted(async() => {
-  await getStartData()
+    await getStartData()
 })
 </script>
