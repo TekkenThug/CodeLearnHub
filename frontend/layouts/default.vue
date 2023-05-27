@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import TheHeader from '~/components/common/TheHeader.vue'
+import TheHeader from '~/components/common/header/TheHeader.vue'
 import TheFooter from '~~/components/common/TheFooter.vue'
 </script>
 
