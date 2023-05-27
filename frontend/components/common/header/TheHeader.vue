@@ -91,6 +91,7 @@ const { open: openMobilePopup } = useModal({
     position: fixed
     top: 0
     left: 0
+    z-index: $z-header
     width: 100%
     padding: $offset-xxs
     background-color: $white
