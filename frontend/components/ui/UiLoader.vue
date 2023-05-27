@@ -1,5 +1,5 @@
 <template>
-  <span :class="['ui-loader', `ui-loader--${props.type}`]" />
+    <span :class="['ui-loader', `ui-loader--${props.type}`]" />
 </template>
 
 <script setup lang="ts">
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  type: 'primary'
+    type: 'primary'
 })
 </script>
 
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
   animation: rotation 1s linear infinite
 
   &--primary
-    border-color: $blue
+    border-color: $blue-main
     border-bottom-color: transparent
 
 @keyframes rotation

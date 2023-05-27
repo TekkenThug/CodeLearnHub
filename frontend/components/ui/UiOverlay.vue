@@ -1,14 +1,14 @@
 <template>
-  <Transition name="fade">
-    <div v-if="props.isLoading" class="ui-overlay">
-      <UiLoader class="ui-overlay__loader" />
-    </div>
-  </Transition>
+    <Transition name="fade">
+        <div v-if="props.isLoading" class="ui-overlay">
+            <UiLoader class="ui-overlay__loader" />
+        </div>
+    </Transition>
 </template>
 
 <script setup lang="ts">
 const props = withDefaults(defineProps<{ isLoading?: boolean }>(), {
-  isLoading: false
+    isLoading: false
 })
 </script>
 
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<{ isLoading?: boolean }>(), {
   display: flex
   justify-content: center
   align-items: center
-  background-color: rgba($gray-100, .8)
+  background-color: rgba($gray-50, .8)
 
   &__loader
     position: relative
