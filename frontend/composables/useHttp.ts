@@ -6,11 +6,11 @@ import axios from 'axios'
 const baseURL = 'http://localhost:80/'
 
 const httpInstance = axios.create({
-  baseURL,
-  withCredentials: true,
-  headers: {
-    Accept: 'application/json'
-  }
+    baseURL,
+    withCredentials: true,
+    headers: {
+        Accept: 'application/json'
+    }
 })
 
 export const useHttp = () => httpInstance
