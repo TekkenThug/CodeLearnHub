@@ -12,6 +12,10 @@ export default defineNuxtConfig({
         }
     },
 
+    routeRules: {
+        '/settings': { redirect: '/settings/admin' }
+    },
+
     app: {
         head: {
             title: 'eDex',
