@@ -2,6 +2,8 @@
   "extends": ["@nuxtjs/eslint-config-typescript"],
   "rules": {
     "semi-style": "warn",
-    "space-before-function-paren": ["error", "never"]
+    "space-before-function-paren": ["error", "never"],
+    "indent": ["error", 4],
+    "vue/html-indent": ["error", 4]
   }
 }
