@@ -1,29 +1,15 @@
 <template>
-  <main class="landing">
-    <LandingStart />
+    <main>
+        <LandingStart />
 
-    <LandingFacts />
+        <LandingCourses />
 
-    <LandingCourses />
-
-    <LandingCategory />
-
-    <LandingInstructors />
-
-    <LandingFeedback />
-  </main>
+        <LandingQuestions />
+    </main>
 </template>
 
 <script setup lang="ts">
-import LandingStart from '~/components/landing/LandingStart.vue'
-import LandingFacts from '~/components/landing/LandingFacts.vue'
-import LandingCategory from '~/components/landing/LandingCategory.vue'
-import LandingCourses from '~/components/landing/LandingCourses.vue'
-import LandingInstructors from '~/components/landing/LandingInstructors.vue'
-import LandingFeedback from '~/components/landing/LandingFeedback.vue'
+import LandingStart from '~/components/pages/landing/LandingStart.vue'
+import LandingCourses from '~/components/pages/landing/LandingCourses.vue'
+import LandingQuestions from '~/components/pages/landing/questions/LandingQuestions.vue'
 </script>
-
-<style lang="sass" scoped>
-.landing
-  margin-top: -#{$header-height}
-</style>
