@@ -1,1 +1,56 @@
-$font-main: 'PT Sans', sans-serif
+$font-title: 'Unbounded', sans-serif
+$font-main: 'Inter', sans-serif
+
+@mixin h1
+  font-family: $font-title
+  font-weight: 700
+  font-size: 40px
+  line-height: 52px
+
+  @include responsive($mobile)
+    font-size: 30px
+    line-height: 42px
+
+@mixin h2
+  font-weight: 500
+  font-family: $font-title
+  font-size: 20px
+  line-height: 130%
+
+@mixin h3
+  font-weight: 400
+  font-family: $font-title
+  font-size: 18px
+  line-height: 32px
+
+  @include responsive($mobile)
+    font-size: 16px
+    line-height: 28px
+
+@mixin l1
+  font-weight: 500
+  font-family: $font-title
+  font-size: 18px
+  line-height: 21px
+
+@mixin p1
+  font-weight: 600
+  font-family: $font-main
+  font-size: 20px
+  line-height: 24px
+
+@mixin p2
+  font-weight: 400
+  font-family: $font-main
+  font-size: 16px
+  line-height: 21px
+
+@mixin p3
+  font-weight: 400
+  font-family: $font-main
+  font-size: 14px
+  line-height: 18px
+
+  @include responsive($mobile)
+    font-size: 12px
+    line-height: 16px
