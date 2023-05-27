@@ -17,7 +17,7 @@ export default defineNuxtConfig({
       title: 'eDex',
 
       link: [
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap' }
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Unbounded:wght@300;400;500;600&display=swap' }
       ]
     }
   },
