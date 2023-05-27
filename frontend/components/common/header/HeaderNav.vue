@@ -1,23 +1,23 @@
 <template>
-  <ul :class="$style.navList">
-    <li
-      v-for="item in items.filter(item => item.visible)"
-      :key="item.name"
-      :class="$style.navItem"
-      @click="item.callback"
-    >
-      <NuxtLink
-        v-if="item.link"
-        :to="item.link"
-      >
-        {{ item.name }}
-      </NuxtLink>
+    <ul :class="$style.navList">
+        <li
+            v-for="item in items.filter(item => item.visible)"
+            :key="item.name"
+            :class="$style.navItem"
+            @click="item.callback"
+        >
+            <NuxtLink
+                v-if="item.link"
+                :to="item.link"
+            >
+                {{ item.name }}
+            </NuxtLink>
 
-      <template v-else>
-        {{ item.name }}
-      </template>
-    </li>
-  </ul>
+            <template v-else>
+                {{ item.name }}
+            </template>
+        </li>
+    </ul>
 </template>
 
 <script lang="ts" setup>

@@ -1,30 +1,30 @@
 <template>
-  <header :class="$style.TheHeader">
-    <div class="container">
-      <div :class="$style.wrapper">
-        <NuxtLink to="/">
-          <img
-            :class="$style.logo"
-            src="~/assets/images/common/logo.png"
-            alt="Logo"
-          >
-        </NuxtLink>
+    <header :class="$style.TheHeader">
+        <div class="container">
+            <div :class="$style.wrapper">
+                <NuxtLink to="/">
+                    <img
+                        :class="$style.logo"
+                        src="~/assets/images/common/logo.png"
+                        alt="Logo"
+                    >
+                </NuxtLink>
 
-        <HeaderNav
-          :class="$style.nav"
-          :items="navigation"
-        />
+                <HeaderNav
+                    :class="$style.nav"
+                    :items="navigation"
+                />
 
-        <button
-          :class="$style.burgerButton"
+                <button
+                    :class="$style.burgerButton"
 
-          @click="openMobilePopup"
-        >
-          <Icon name="carbon:menu" />
-        </button>
-      </div>
-    </div>
-  </header>
+                    @click="openMobilePopup"
+                >
+                    <Icon name="carbon:menu" />
+                </button>
+            </div>
+        </div>
+    </header>
 </template>
 
 <script setup lang="ts">
@@ -39,50 +39,47 @@ type PopupMode = 'login' | 'register'
 
 const popupMode = ref<PopupMode>('login')
 const { open: openPopup } = useModal({
-  component: AuthModal,
-  attrs: { initialMode: popupMode }
+    component: AuthModal,
+    attrs: { initialMode: popupMode }
 })
 const processPopup = (value: PopupMode) => {
-  popupMode.value = value
-  openPopup()
+    popupMode.value = value
+    openPopup()
 }
 
 const http = useHttp()
 const logout = () => {
-  http.post('/logout', {}).then(() => store.logout())
+    http.post('/logout', {}).then(() => store.logout())
 }
 
-const navigation = ref<{
-    name: string,
-    link?: string,
-    visible: boolean
-    callback?: Function
-}[]>([
-  {
-    name: 'Главная',
-    visible: true,
-    link: '/'
-  },
-  {
-    name: 'Каталог',
-    visible: true,
-    link: '/courses'
-  },
-  {
-    name: 'Войти',
-    visible: !store.isAuth,
-    callback: () => processPopup('login')
-  },
-  {
-    name: 'Выйти',
-    visible: store.isAuth,
-    callback: () => logout()
-  }
-])
+const navigation = computed(() => {
+    return [
+        {
+            name: 'Главная',
+            visible: true,
+            link: '/'
+        },
+        {
+            name: 'Каталог',
+            visible: true,
+            link: '/courses'
+        },
+        {
+            name: 'Войти',
+            visible: !store.isAuth,
+            callback: () => processPopup('login')
+        },
+        {
+            name: 'Выйти',
+            visible: store.isAuth,
+            callback: () => logout()
+        }
+    ]
+})
 
 const { open: openMobilePopup } = useModal({
-  component: HeaderMenuModal,
-  attrs: { items: navigation }
+    component: HeaderMenuModal,
+    attrs: { items: navigation }
 })
 </script>
 
