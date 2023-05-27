@@ -4,6 +4,13 @@
   margin: 0 auto
   padding: 0 15px
 
+
+.section
+  padding: $section-y-offset 0
+
+  @include responsive($mobile)
+    padding: $section-y-offset-mobile 0
+
 .icon
   width: 24px
   height: 24px
