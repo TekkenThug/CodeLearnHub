@@ -1,2 +1,11 @@
 @mixin trans
   transition: all .2s ease
+
+@mixin hover
+  @media (hover), (min-width: 0 \0)
+    &:hover
+      @content
+
+@mixin responsive($resolution)
+  @media (max-width: $resolution)
+    @content
