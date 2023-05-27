@@ -50,7 +50,7 @@ const props = withDefaults(defineProps<Props>(), {
 
   &--primary
     color: $white
-    background-color: $second-primary-500
+    background-color: $blue-main
 
     .ui-button__loader
       .ui-loader
@@ -58,7 +58,7 @@ const props = withDefaults(defineProps<Props>(), {
         border-bottom-color: transparent
 
     &:hover
-      background-color: $second-primary-600
+      background-color: $blue-dark-card
 
     &:disabled
       background-color: $second-primary-200
