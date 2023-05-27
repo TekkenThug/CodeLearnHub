@@ -1,47 +1,47 @@
 <template>
-  <div class="auth-modal__content">
-    <UiOverlay class="auth-modal__overlay" :is-loading="isLoading" />
+    <div class="auth-modal__content">
+        <UiOverlay class="auth-modal__overlay" :is-loading="isLoading" />
 
-    <h2 class="auth-modal__title">
-      Вход в аккаунт
-    </h2>
+        <h2 class="auth-modal__title">
+            Вход в аккаунт
+        </h2>
 
-    <form class="auth-modal__form" novalidate @submit="submitForm">
-      <UiInput
-        v-model="email"
-        class="auth-modal__form-input"
-        placeholder="E-mail"
-        type="email"
-        :error-message="errors.email"
-        name="email"
-      />
+        <form class="auth-modal__form" novalidate @submit="submitForm">
+            <UiInput
+                v-model="email"
+                class="auth-modal__form-input"
+                placeholder="E-mail"
+                type="email"
+                :error-message="errors.email"
+                name="email"
+            />
 
-      <UiInput
-        v-model="password"
-        class="auth-modal__form-input"
-        placeholder="Пароль"
-        type="password"
-        :error-message="errors.password"
-        name="password"
-      />
+            <UiInput
+                v-model="password"
+                class="auth-modal__form-input"
+                placeholder="Пароль"
+                type="password"
+                :error-message="errors.password"
+                name="password"
+            />
 
-      <UiButton class="auth-modal__submit" :disabled="buttonIsDisabled">
-        Войти
-      </UiButton>
-    </form>
+            <UiButton class="auth-modal__submit" :disabled="buttonIsDisabled">
+                Войти
+            </UiButton>
+        </form>
 
-    <div class="auth-modal__bottom">
-      <UiButtonLight class="auth-modal__button" @click="$emit('changeMode', 'forgot')">
-        Забыли пароль?
-      </UiButtonLight>
+        <div class="auth-modal__bottom">
+            <UiButtonLight class="auth-modal__button" @click="$emit('changeMode', 'forgot')">
+                Забыли пароль?
+            </UiButtonLight>
 
-      <span>или</span>
+            <span>или</span>
 
-      <UiButtonLight class="auth-modal__button" @click="$emit('changeMode', 'register')">
-        Нет аккаунта?
-      </UiButtonLight>
+            <UiButtonLight class="auth-modal__button" @click="$emit('changeMode', 'register')">
+                Нет аккаунта?
+            </UiButtonLight>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -63,10 +63,10 @@ const { login } = await useAuth()
 const notify = useToast()
 
 const validationSchema = toFormValidator(
-  z.object({
-    email: z.string().trim().nonempty(REQUIRED_ERROR).email({ message: EMAIL_ERROR }),
-    password: z.string().trim().nonempty(REQUIRED_ERROR)
-  })
+    z.object({
+        email: z.string().trim().nonempty(REQUIRED_ERROR).email({ message: EMAIL_ERROR }),
+        password: z.string().trim().nonempty(REQUIRED_ERROR)
+    })
 )
 
 const store = useUserStore()
@@ -75,20 +75,20 @@ const { handleSubmit, errors } = useForm({ validationSchema })
 const { value: email } = useField<string>('email', 'isRequired', { validateOnValueUpdate: false })
 const { value: password } = useField<string>('password', 'isRequired', { validateOnValueUpdate: false })
 const submitForm = handleSubmit((values) => {
-  isLoading.value = true
+    isLoading.value = true
 
-  login({ email: values.email, password: values.password })
-    .then(({ data }) => {
-      store.setUserData(data.data.user, true)
-      emit('complete')
-      navigateTo('/profile')
-    })
-    .catch((e) => {
-      if (e.response?.data?.error) {
-        notify.error(e.response.data.error)
-      }
-    }).finally(() => {
-      isLoading.value = false
-    })
+    login({ email: values.email, password: values.password })
+        .then(({ data }) => {
+            store.setUserData(data.data.user, true)
+            emit('complete')
+            navigateTo('/profile')
+        })
+        .catch((e) => {
+            if (e.response?.data?.error) {
+                notify.error(e.response.data.error)
+            }
+        }).finally(() => {
+            isLoading.value = false
+        })
 })
 </script>

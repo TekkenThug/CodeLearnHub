@@ -1,24 +1,24 @@
 <template>
-  <VueFinalModal
-    class="confirm-modal"
-    content-class="auth-modal"
-    overlay-transition="vfm-fade"
-    content-transition="vfm-fade"
-  >
-    <div class="auth-modal__image" />
+    <VueFinalModal
+        class="confirm-modal"
+        content-class="auth-modal"
+        overlay-transition="vfm-fade"
+        content-transition="vfm-fade"
+    >
+        <div class="auth-modal__image" />
 
-    <Transition name="slide-fade" mode="out-in">
-      <AuthModalLogin
-        v-if="mode === 'login'"
-        @change-mode="changeMode"
-        @complete="closeAll"
-      />
+        <Transition name="slide-fade" mode="out-in">
+            <AuthModalLogin
+                v-if="mode === 'login'"
+                @change-mode="changeMode"
+                @complete="closeAll"
+            />
 
-      <AuthModalRegister v-else-if="mode === 'register'" @change-mode="changeMode" />
+            <AuthModalRegister v-else-if="mode === 'register'" @change-mode="changeMode" />
 
-      <AuthModalForgot v-else-if="mode === 'forgot'" @change-mode="changeMode" />
-    </Transition>
-  </VueFinalModal>
+            <AuthModalForgot v-else-if="mode === 'forgot'" @change-mode="changeMode" />
+        </Transition>
+    </VueFinalModal>
 </template>
 
 <script setup lang="ts">
