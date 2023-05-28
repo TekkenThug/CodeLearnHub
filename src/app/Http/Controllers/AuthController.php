@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Role;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\StoreUserRequest;
@@ -22,7 +21,6 @@ class AuthController extends Controller
         $newUser = User::create([
             'nickname' => $validated['nickname'],
             'email' => $validated['email'],
-            'role_id' => Role::where('name', 'student')->first()->id,
             'password' => Hash::make($validated['password'], ['rounds' => 12])
         ]);
 
