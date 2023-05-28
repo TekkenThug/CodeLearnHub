@@ -1,38 +1,38 @@
 <template>
-  <button
-    :class="[
-      'ui-button',
-      `ui-button--${props.type}`,
-      {
-        'ui-button--is-loading': isLoading
-      }
-    ]"
-    :disabled="disabled"
-    @click="$emit('click')"
-  >
-    <Transition name="fade" :duration="100">
-      <div v-if="isLoading" class="ui-button__loader">
-        <UiLoader />
-      </div>
-    </Transition>
+    <button
+        :class="[
+            'ui-button',
+            `ui-button--${props.type}`,
+            {
+                'ui-button--is-loading': isLoading
+            }
+        ]"
+        :disabled="disabled"
+        @click="$emit('click')"
+    >
+        <Transition name="fade" :duration="100">
+            <div v-if="isLoading" class="ui-button__loader">
+                <UiLoader />
+            </div>
+        </Transition>
 
-    <slot />
-  </button>
+        <slot />
+    </button>
 </template>
 
 <script setup lang="ts">
 defineEmits(['click'])
 
 interface Props {
-  type?: 'primary'
+  type?: 'primary' | 'danger'
   disabled?: boolean,
   isLoading?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  type: 'primary',
-  disabled: false,
-  isLoading: false
+    type: 'primary',
+    disabled: false,
+    isLoading: false
 })
 </script>
 
@@ -44,6 +44,9 @@ const props = withDefaults(defineProps<Props>(), {
   border-radius: 7px
   padding: 12px 24px
   overflow: hidden
+
+  &:disabled
+    cursor: not-allowed
 
   &--is-loading
     pointer-events: none
@@ -62,7 +65,13 @@ const props = withDefaults(defineProps<Props>(), {
 
     &:disabled
       background-color: $second-primary-200
-      cursor: not-allowed
+
+  &--danger
+    color: $white
+    background-color: $error-500
+
+    @include hover
+      background-color: darken($error-500, 10%)
 
   &__loader
     display: flex
