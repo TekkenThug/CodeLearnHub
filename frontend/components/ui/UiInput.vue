@@ -1,30 +1,30 @@
 <template>
-  <div :class="['ui-input', { 'ui-input--disabled': disabled }]">
-    <div v-if="$slots.prefix" class="ui-input__prefix">
-      <slot name="prefix" />
+    <div :class="['ui-input', { 'ui-input--disabled': disabled }]">
+        <div v-if="$slots.prefix" class="ui-input__prefix">
+            <slot name="prefix" />
+        </div>
+
+        <input
+            :type="type"
+            :placeholder="props.placeholder"
+            :value="modelValue"
+            :name="name"
+            :class="[
+                'ui-input__field',
+                {
+                    'ui-input__field--offset-left': $slots.prefix
+                }
+            ]"
+            :disabled="disabled"
+            @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+        >
+
+        <Transition name="fade">
+            <span v-if="errorMessage" class="ui-input__error">
+                {{ errorMessage }}
+            </span>
+        </Transition>
     </div>
-
-    <input
-      :type="type"
-      :placeholder="props.placeholder"
-      :value="modelValue"
-      :name="name"
-      :class="[
-        'ui-input__field',
-        {
-          'ui-input__field--offset-left': $slots.prefix
-        }
-      ]"
-      :disabled="disabled"
-      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-    >
-
-    <Transition name="fade">
-      <span v-if="errorMessage" class="ui-input__error">
-        {{ errorMessage }}
-      </span>
-    </Transition>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -41,13 +41,13 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  type: 'text',
-  name: '',
-  placeholder: '',
-  modelValue: '',
-  errorMessage: '',
-  disabled: false,
-  rules: () => ([])
+    type: 'text',
+    name: '',
+    placeholder: '',
+    modelValue: '',
+    errorMessage: '',
+    disabled: false,
+    rules: () => ([])
 })
 </script>
 
