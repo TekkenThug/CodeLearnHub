@@ -28,6 +28,10 @@ const props = withDefaults(defineProps<Props>(), {
     border-color: $blue-main
     border-bottom-color: transparent
 
+  &--secondary
+      border-color: $white
+      border-bottom-color: transparent
+
 @keyframes rotation
   0%
     transform: rotate(0deg)
