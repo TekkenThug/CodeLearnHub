@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -46,6 +48,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            $user->roles()->attach(Role::where('name', 'student')->first()->id);
+        });
+    }
 
     public function roles(): BelongsToMany
     {
