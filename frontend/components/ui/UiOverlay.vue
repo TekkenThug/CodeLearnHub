@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<{ isLoading?: boolean }>(), {
   display: flex
   justify-content: center
   align-items: center
-  background-color: rgba($gray-50, .8)
+  background-color: rgba($white, .9)
 
   &__loader
     position: relative
