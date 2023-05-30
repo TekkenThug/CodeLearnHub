@@ -65,6 +65,16 @@ const navigation = computed(() => {
             link: '/courses'
         },
         {
+            name: 'Контакты',
+            visible: true,
+            link: '/contacts'
+        },
+        {
+            name: 'Авторство',
+            visible: true,
+            link: '/courses/create'
+        },
+        {
             name: 'Войти',
             visible: !store.isAuth,
             callback: () => processPopup('login')
