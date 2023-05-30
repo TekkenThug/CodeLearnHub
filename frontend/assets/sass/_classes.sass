@@ -4,6 +4,11 @@
   margin: 0 auto
   padding: 0 15px
 
+.page
+  padding: $page-y-offset 0
+
+  @include responsive($mobile)
+    padding: $page-y-offset-mobile 0
 
 .section
   padding: $section-y-offset 0
