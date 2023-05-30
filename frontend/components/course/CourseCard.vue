@@ -9,8 +9,12 @@
                 {{ title }}
             </h3>
 
+            <p :class="$style.description">
+                {{ description }}
+            </p>
+
             <div :class="$style.statistic">
-                <strong :class="$style.statisticItem">
+                <strong v-if="lessonsCount" :class="$style.statisticItem">
                     <Icon
                         name="bi:book"
                         size="16"
@@ -38,13 +42,16 @@ import { pluralize } from '~/utils/string'
 interface CourseCard {
     image: string,
     title: string,
-    lessonsCount: number,
+    description?: string,
+    lessonsCount?: number,
     studentsCount?: number
 }
 
 const props = defineProps<CourseCard>()
 
 const lessonPluralize = computed(() => {
+    if (!props.lessonsCount) { return '' }
+
     return `${props.lessonsCount} ${pluralize(props.lessonsCount, ['урок', 'урока', 'уроков'])}`
 })
 const studentPluralize = computed(() => {
@@ -56,10 +63,13 @@ const studentPluralize = computed(() => {
 
 <style lang="sass" module>
 .CourseCard
+    display: flex
+    flex-direction: column
     background-color: $white
     border-radius: $r-l
     overflow: hidden
     box-shadow: 0 0 15px rgba(48, 175, 255, 0.2)
+    border: 1px solid $blue-main
 
 .image
     height: 200px
@@ -71,15 +81,18 @@ const studentPluralize = computed(() => {
         object-position: center
 
 .info
-    border: 1px solid $blue-main
-    border-top: none
     border-bottom-right-radius: $r-l
     border-bottom-left-radius: $r-l
     padding: $offset-m
+    flex-grow: 1
 
 .title
     @include p1
     font-weight: 700
+    margin-bottom: $offset-xs
+
+.description
+    @include p2
     margin-bottom: $offset-xs
 
 .statistic
