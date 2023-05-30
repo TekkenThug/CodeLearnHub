@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TicketController;
 
 /*
@@ -28,6 +29,8 @@ Route::prefix('v1')->group(function() {
     });
 
     Route::post('/tickets', [TicketController::class, 'openTicket']);
+    Route::get('/news', [NewsController::class, 'get']);
+
     Route::middleware('auth:sanctum')->group(function() {
         Route::resource('users', UserController::class);
 
