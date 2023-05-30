@@ -23,6 +23,7 @@ const version = ref('0.1.0')
     font-size: 12px
     font-weight: 600
     bottom: 0
+    z-index: $z-test-flight
 
     @include responsive($mobile)
         position: static
