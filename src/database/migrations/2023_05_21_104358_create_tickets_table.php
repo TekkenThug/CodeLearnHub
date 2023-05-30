@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->text('message');
-            $table->unsignedBigInteger('from_id');
-            $table->unsignedBigInteger('admin_id')->null();
+            $table->text('text');
+            $table->string('theme');
+            $table->string('email');
+            $table->unsignedBigInteger('admin_id')->nullable();
 
-            $table->foreign('from_id')->references('id')->on('users');
             $table->foreign('admin_id')->references('id')->on('users');
             $table->timestamps();
         });
