@@ -8,6 +8,7 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ProgramLanguageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,8 +31,12 @@ Route::prefix('v1')->group(function() {
     });
 
     Route::get('/courses', [CourseController::class, 'index']);
+    Route::post('/courses', [CourseController::class, 'store']);
+
+
     Route::post('/tickets', [TicketController::class, 'openTicket']);
     Route::get('/news', [NewsController::class, 'get']);
+    Route::get('/program-languages/accepted', [ProgramLanguageController::class, 'getAcceptedCourses']);
 
     Route::middleware('auth:sanctum')->group(function() {
         Route::resource('users', UserController::class);
