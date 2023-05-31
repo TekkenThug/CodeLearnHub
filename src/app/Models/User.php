@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Role;
+use App\Models\Course;
 
 class User extends Authenticatable
 {
@@ -38,7 +39,10 @@ class User extends Authenticatable
         'updated_at',
         'created_at',
         'email_verified_at',
+        'pivot',
     ];
+
+    protected $with = ['roles:name'];
 
     /**
      * The attributes that should be cast.
@@ -58,8 +62,18 @@ class User extends Authenticatable
         });
     }
 
+    public function courses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class);
+    }
+
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function rolesInArray()
+    {
+        return $this->roles();
     }
 }
