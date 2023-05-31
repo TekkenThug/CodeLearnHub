@@ -12,10 +12,6 @@ export default defineNuxtConfig({
         }
     },
 
-    routeRules: {
-        '/settings': { redirect: '/settings/admin' }
-    },
-
     app: {
         head: {
             title: 'eDex',
@@ -32,7 +28,8 @@ export default defineNuxtConfig({
         'normalize.css',
         'vue-final-modal/style.css',
         '@splidejs/vue-splide/css',
-        'vue-toastification/dist/index.css'
+        'vue-toastification/dist/index.css',
+        '~/assets/css/vue-multiselect.min.css'
     ],
 
     modules: [
