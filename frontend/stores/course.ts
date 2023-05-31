@@ -7,7 +7,17 @@ export const useCourseStore = defineStore('course', () => {
         return http.get('/api/v1/courses', { params }).then(({ data }) => data)
     }
 
+    const getAcceptedLanguagesForCreate = () => {
+        return http.get('/api/v1/program-languages/accepted').then(({ data }) => data)
+    }
+
+    const createCourse = (data) => {
+        return http.post('/api/v1/courses', data).then(({ data }) => data)
+    }
+
     return {
-        getCoursesByParams
+        getCoursesByParams,
+        getAcceptedLanguagesForCreate,
+        createCourse,
     }
 })
