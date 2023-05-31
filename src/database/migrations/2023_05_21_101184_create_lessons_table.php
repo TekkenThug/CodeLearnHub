@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('content');
+            $table->text('layout_code');
             $table->text('test_code');
             $table->unsignedInteger('order');
             $table->unsignedBigInteger('module_id');
