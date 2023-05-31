@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_course', function (Blueprint $table) {
+        Schema::create('course_user', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('course_id');
 
@@ -22,7 +22,7 @@ return new class extends Migration
 
             $table->primary(['user_id', 'course_id']);
 
-            $table->unsignedInteger('rate')->null();
+            $table->unsignedInteger('rate')->nullable();
         });
     }
 
