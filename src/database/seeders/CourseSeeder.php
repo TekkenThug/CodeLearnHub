@@ -28,6 +28,7 @@ class CourseSeeder extends Seeder
             'students_count' => 4,
             'cover' => 'https://static.vecteezy.com/system/resources/previews/020/111/553/original/java-editorial-logo-free-download-free-vector.jpg',
             'program_language_id' => 2,
+            'is_active' => true
         ]);
     }
 }
