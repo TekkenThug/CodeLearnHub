@@ -7,7 +7,7 @@
                 'ui-button--is-loading': isLoading
             }
         ]"
-        :disabled="disabled"
+        :disabled="disabled || isLoading"
         @click="$emit('click')"
     >
         <Transition name="fade" :duration="100">
