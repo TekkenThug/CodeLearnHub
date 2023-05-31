@@ -4,7 +4,7 @@ $font-main: 'Inter', sans-serif
 @mixin h1
   font-family: $font-title
   font-weight: 700
-  font-size: 40px
+  font-size: 46px
   line-height: 52px
 
   @include responsive($mobile)
@@ -14,8 +14,11 @@ $font-main: 'Inter', sans-serif
 @mixin h2
   font-weight: 500
   font-family: $font-title
-  font-size: 20px
+  font-size: 32px
   line-height: 130%
+
+  @include responsive($mobile)
+    font-size: 20px
 
 @mixin h3
   font-weight: 400
