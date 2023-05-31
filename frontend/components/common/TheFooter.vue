@@ -58,12 +58,12 @@ const columns = ref([
         title: 'Полезное',
         items: [
             {
-                title: 'О проекте',
-                link: '/about'
+                title: 'Новости',
+                link: '/updates'
             },
             {
-                title: 'Новости',
-                link: '/about'
+                title: 'Контакты',
+                link: '/contacts'
             }
         ]
     },
