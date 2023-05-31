@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Module extends Model
 {
+    public $timestamps = false;
+    
+    protected $fillable = [
+        'title',
+        'order',
+        'course_id',
+    ];
+
     use HasFactory;
 }
