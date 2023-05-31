@@ -19,7 +19,7 @@ class CourseSeeder extends Seeder
             'name' => 'Курс по PHP',
             'description' => 'Основы PHP - языка backend',
             'cover' => 'https://www.php.net/images/meta-image.png',
-            'programming_language_id' => 1,
+            'program_language_id' => 1,
         ]);
 
         DB::table('courses')->insert([
@@ -27,7 +27,7 @@ class CourseSeeder extends Seeder
             'description' => 'ООП для чайников',
             'students_count' => 4,
             'cover' => 'https://static.vecteezy.com/system/resources/previews/020/111/553/original/java-editorial-logo-free-download-free-vector.jpg',
-            'programming_language_id' => 1,
+            'program_language_id' => 2,
         ]);
     }
 }
