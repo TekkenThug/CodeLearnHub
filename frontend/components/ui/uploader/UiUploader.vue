@@ -1,5 +1,5 @@
 <template>
-    <div :class="$style.UiUploader">
+    <div :class="[$style.UiUploader, { [$style['_dark-bg']]: isEmpty } ]">
         <input
             type="file"
             :accept="accept"
@@ -14,21 +14,23 @@
             :class="$style.image"
         >
 
-        <img
-            v-else-if="initialImage"
-            :src="initialImage"
-            alt="Image"
-            :class="$style.image"
-        >
+        <template v-else-if="!isEmpty">
+            <img
+                v-if="initialImage"
+                :src="initialImage"
+                alt="Image"
+                :class="$style.image"
+            >
 
-        <img
-            v-else
-            src="~/assets/images/common/default-avatar.png"
-            alt="Image"
-            :class="$style.image"
-        >
+            <img
+                v-else
+                src="~/assets/images/common/default-avatar.png"
+                alt="Image"
+                :class="$style.image"
+            >
+        </template>
 
-        <span :class="$style.overlay">
+        <span :class="[$style.overlay, { [$style['_visible']]: isEmpty && !preview }]">
             <Icon name="bi:camera" />
 
             {{ uploadCaption }}
@@ -42,12 +44,14 @@ const emit = defineEmits<{(e: 'uploaded', value: Blob | MediaSource): void }>()
 interface Props {
     accept?: string,
     uploadCaption?: string,
-    initialImage?: string
+    initialImage?: string,
+    isEmpty?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
     accept: 'images/*',
     uploadCaption: 'Загрузить',
-    initialImage: ''
+    initialImage: '',
+    isEmpty: false
 })
 
 const uploadedFile = ref(null)
@@ -69,6 +73,9 @@ const handleFileChange = (event) => {
     overflow: hidden
     cursor: pointer
     user-select: none
+
+    &._dark-bg
+        background-color: #000
 
     @include hover
         .overlay
@@ -109,4 +116,8 @@ const handleFileChange = (event) => {
     visibility: hidden
     background-color: rgba(#000, .7)
     font-size: 12px
+
+    &._visible
+        visibility: visible
+        opacity: 1
 </style>
