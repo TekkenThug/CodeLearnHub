@@ -50,7 +50,7 @@ const props = defineProps<{
         background-color: $white
 
 .navItem
-    @include l1
+    @include l2
     color: $blue-dark-card
     cursor: pointer
 
