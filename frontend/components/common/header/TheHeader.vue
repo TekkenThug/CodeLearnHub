@@ -49,7 +49,7 @@ const processPopup = (value: PopupMode) => {
 
 const http = useHttp()
 const logout = () => {
-    http.post('/logout', {}).then(() => store.logout())
+    return http.post('/logout', {}).then(() => store.logout())
 }
 
 const navigation = computed(() => {
@@ -80,9 +80,17 @@ const navigation = computed(() => {
             callback: () => processPopup('login')
         },
         {
+            name: 'Профиль',
+            visible: store.isAuth,
+            link: '/profile'
+        },
+        {
             name: 'Выйти',
             visible: store.isAuth,
-            callback: () => logout()
+            callback: async() => {
+                await logout()
+                navigateTo('/')
+            }
         }
     ]
 })
