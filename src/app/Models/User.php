@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Role;
+use App\Models\Comment;
 use App\Models\Course;
 
 class User extends Authenticatable
@@ -65,6 +66,11 @@ class User extends Authenticatable
     public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class);
+    }
+
+    public function comments(): BelongsToMany
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function roles(): BelongsToMany
