@@ -21,7 +21,7 @@
                         <NuxtLink
                             v-for="course in courses"
                             :key="course.title"
-                            :to="course.link"
+                            :to="`/courses/${course.id}`"
                             :class="$style.courseLink"
                         >
                             <CourseCard
