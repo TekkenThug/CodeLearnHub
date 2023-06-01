@@ -81,7 +81,6 @@ const submitForm = handleSubmit((values) => {
         .then(({ data }) => {
             store.setUserData(data.data.user, true)
             emit('complete')
-            navigateTo('/profile')
         })
         .catch((e) => {
             if (e.response?.data?.error) {
