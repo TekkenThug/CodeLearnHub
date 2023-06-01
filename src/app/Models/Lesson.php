@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Course;
+use App\Models\Comment;
 
 class Lesson extends Model
 {
@@ -24,5 +25,10 @@ class Lesson extends Model
     public function module()
     {
         return $this->belongsTo(Module::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }
