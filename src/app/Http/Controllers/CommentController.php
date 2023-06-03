@@ -13,14 +13,17 @@ class CommentController extends Controller
         $lessonId = $request->input('lessonId');
         $content = $request->input('text');
 
-        Comment::create([
+        $comment = Comment::create([
             'user_id' => $authorId,
             'lesson_id' => $lessonId,
             'content' => $content,
         ]);
 
         return response()->json([
-            'message' => 'Комментарий успешно опубликован'
+            'message' => 'Комментарий успешно опубликован',
+            'data' => [
+                'comment' => $comment
+            ]
         ]); 
     }
 }
