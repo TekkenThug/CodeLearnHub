@@ -26,7 +26,7 @@ class Course extends Model
 
     public function programLanguage()
     {
-        return $this->belongsTo(ProgramLanguage::class);
+        return $this->hasOne(ProgramLanguage::class);
     }
 
     public function modules()
