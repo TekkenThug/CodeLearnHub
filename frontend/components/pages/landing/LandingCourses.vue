@@ -13,6 +13,7 @@
                     :class="$style.courseItem"
                 >
                     <CourseCard
+                        :class="$style.course"
                         :image="course.cover"
                         :title="course.name"
                         :description="course.description"
@@ -57,6 +58,9 @@ const props = defineProps({
 
     @include hover
         transform: scale(1.02)
+
+.course
+    width: 100%
 
 .title
     @include h1
