@@ -52,8 +52,11 @@
     </footer>
 </template>
 
-<script setup lang="ts">
-const columns = ref([
+<script setup>
+import { useCourseStore } from '~/stores/course'
+
+const courseStore = useCourseStore()
+const columns = computed(() => ([
     {
         title: 'Полезное',
         items: [
@@ -64,27 +67,21 @@ const columns = ref([
             {
                 title: 'Контакты',
                 link: '/contacts'
+            },
+            {
+                title: 'Стать автором',
+                link: '/courses/create'
             }
         ]
     },
     {
-        title: 'Все курсы',
-        items: [
-            {
-                title: 'PHP',
-                link: '/courses/'
-            },
-            {
-                title: 'JavaScript',
-                link: '/courses/'
-            },
-            {
-                title: 'Python',
-                link: '/courses/'
-            }
-        ]
+        title: 'Курсы',
+        items: [...courseStore.popularCourses.map(item => ({
+            link: `/courses/${item.id}`,
+            title: item.name
+        }))]
     }
-])
+]))
 
 const socialLinks = ref([
     {
