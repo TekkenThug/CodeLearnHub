@@ -13,7 +13,7 @@
                     <UiLoader />
                 </div>
 
-                <ul v-else>
+                <ul v-else-if="updates.length">
                     <li
                         v-for="item in updates"
                         :key="item.title + item.date"
@@ -25,39 +25,35 @@
                             </h3>
 
                             <strong :class="$style.articleDate">
-                                Дата: {{ item.created_at }}
+                                Дата: {{ item.added_at }}
                             </strong>
                         </div>
 
-                        <div v-html="item.text" />
+                        <div
+                            :class="$style.text"
+                            v-html="item.text"
+                        />
                     </li>
                 </ul>
+
+                <h2 v-else>
+                    Новостей нет
+                </h2>
             </transition>
         </div>
     </main>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 const isLoading = ref(true)
 const http = useHttp()
 
-const updates = ref([
-    {
-        title: 'Версия v.0.1.0',
-        date: '12.05.2023',
-        text: 'Первый патч вышел!'
-    },
-    {
-        title: 'Версия v.0.1.0',
-        date: '12.05.2023',
-        text: 'Первый патч вышел!'
-    }
-])
+const updates = ref([])
 
 onBeforeMount(async() => {
-    const { data } = await http.get('/api/v1/news')
+    const { data } = await http.get('/api/v1/news').then(({ data }) => data)
 
-    updates.value = data.data.news.map(item => ({ ...item, created_at: new Date(item.created_at).toLocaleDateString() }))
+    updates.value = data.news.map(item => ({ ...item, added_at: new Date(item.added_at).toLocaleDateString() }))
     isLoading.value = false
 })
 </script>
@@ -71,7 +67,7 @@ onBeforeMount(async() => {
 .title
     @include h1
     color: $blue-main
-    margin-bottom: $offset-l
+    margin-bottom: $offset-xl
 
 .article
     &:not(:first-child)
@@ -95,8 +91,25 @@ onBeforeMount(async() => {
 .articleTitle
     @include h2
     font-size: 24px
+    margin-bottom: 8px
 
 .articleDate
     font-weight: 500
     font-size: 14px
+
+.text
+    p
+        margin-bottom: $offset-xs
+
+    ul
+        padding-left: $offset-xs
+
+    li
+        list-style-type: circle
+
+        &:first-child
+            margin-top: 5px
+
+        &:not(:last-child)
+            margin-bottom: $offset-xxs
 </style>
