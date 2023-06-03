@@ -16,7 +16,7 @@
 
                     <UiButton
                         :class="$style.button"
-                        @click="openPopup"
+                        @click="handlerClick"
                     >
                         Начать
                     </UiButton>
@@ -33,16 +33,30 @@
     </section>
 </template>
 
-<script lang="ts" setup>
+<script setup>
+import { useUserStore } from '~/stores/user'
 import AuthModal from '~/components/auth/AuthModal.vue'
+import UiButton from '~/components/ui/buttons/UiButton.vue'
 
-const title = ref('Лучшие курсы по программированию')
-const description = ref('Самый быстрый способ попробовать программирование прямо в браузере. Бесплатные курсы с тренажером. Практика после каждого урока.')
+const userStore = useUserStore()
+const isAuth = computed(() => userStore.isAuth)
+const title = ref('Курсы по программированию')
+const description = ref(
+    'Самый быстрый способ попробовать программирование прямо в браузере. Бесплатные курсы с тренажером. Практика после каждого урока.'
+)
 
 const { open: openPopup } = useModal({
     component: AuthModal,
     attrs: { initialMode: 'register' }
 })
+
+const handlerClick = () => {
+    if (isAuth.value) {
+        navigateTo('/courses')
+    } else {
+        openPopup()
+    }
+}
 </script>
 
 <style lang="sass" module>
