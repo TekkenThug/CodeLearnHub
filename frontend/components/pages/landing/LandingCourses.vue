@@ -7,28 +7,34 @@
 
             <ul :class="$style.courseList">
                 <NuxtLink
-                    v-for="course in [...courses, ...courses, ...courses]"
-                    :key="course.title"
-                    :to="course.link"
+                    v-for="course in courses"
+                    :key="course.id"
+                    :to="`/courses/${course.id}`"
                     :class="$style.courseItem"
                 >
-                    <CourseCard v-bind="course" />
+                    <CourseCard
+                        :image="course.cover"
+                        :title="course.name"
+                        :description="course.description"
+                        :lessons-count="course.lessons_count"
+                        :students-count="course.students_count"
+                        v-bind="course"
+                    />
                 </NuxtLink>
             </ul>
         </div>
     </section>
 </template>
 
-<script lang="ts" setup>
-import CourseCard from '~/components/course/CourseCard.vue'
+<script setup>
+import CourseCard from '~/components/course/CourseCard'
 
-const courses = ref([{
-    title: 'PHP',
-    image: 'https://www.php.net/images/meta-image.png',
-    lessonsCount: 14,
-    studentsCount: 15672,
-    link: '/courses'
-}])
+const props = defineProps({
+    courses: {
+        type: Array,
+        default: () => ([])
+    }
+})
 </script>
 
 <style lang="sass" module>
@@ -39,6 +45,8 @@ const courses = ref([{
 
 .courseItem
     @include trans
+    display: flex
+    justify-content: stretch
     width: calc((100% - 24px * 2) / 3)
 
     @include responsive($tablet)
