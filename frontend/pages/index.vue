@@ -2,14 +2,23 @@
     <main>
         <LandingStart />
 
-        <LandingCourses />
+        <LandingCourses
+            v-if="popularCourses && popularCourses.length"
+            :courses="popularCourses"
+        />
 
         <LandingQuestions />
     </main>
 </template>
 
-<script setup lang="ts">
-import LandingStart from '~/components/pages/landing/LandingStart.vue'
-import LandingCourses from '~/components/pages/landing/LandingCourses.vue'
-import LandingQuestions from '~/components/pages/landing/questions/LandingQuestions.vue'
+<script setup>
+import { useCourseStore } from '~/stores/course'
+import LandingStart from '~/components/pages/landing/LandingStart'
+import LandingCourses from '~/components/pages/landing/LandingCourses'
+import LandingQuestions from '~/components/pages/landing/questions/LandingQuestions'
+
+const courseStore = useCourseStore()
+const popularCourses = computed(() => {
+    return courseStore.popularCourses
+})
 </script>
