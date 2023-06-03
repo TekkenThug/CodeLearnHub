@@ -57,12 +57,18 @@
                         </UiButton>
                     </form>
                 </transition>
+
+                <img
+                    :class="$style.image"
+                    src="~/assets/images/courses/create.png"
+                    alt="Laptop"
+                >
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { useField, useForm } from 'vee-validate'
 import { toFormValidator } from '@vee-validate/zod'
 import { z } from 'zod'
@@ -80,7 +86,7 @@ const validationSchema = toFormValidator(
     })
 )
 const { handleSubmit, errors } = useForm({ validationSchema, initialValues: { email: userStore?.user?.email } })
-const { value: email } = useField<string>('email', 'isRequired', {
+const { value: email } = useField('email', 'isRequired', {
     validateOnValueUpdate: false
 })
 const submitForm = handleSubmit(async() => {
@@ -137,5 +143,14 @@ const submitForm = handleSubmit(async() => {
 
 .button
     @include responsive($mobile)
+        width: 100%
+
+.image
+    display: block
+    height: 340px
+    margin: $offset-m auto 0
+
+    @include responsive($mobile)
+        height: auto
         width: 100%
 </style>
