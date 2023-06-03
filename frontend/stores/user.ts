@@ -1,10 +1,13 @@
 import { defineStore } from 'pinia'
 
+type Role = 'student' | 'admin' | 'author'
+
 interface User {
-  id: number | null,
-  nickname: string,
-  email: string,
-  avatar?: string,
+    id: number | null,
+    nickname: string,
+    email: string,
+    roles: Role[],
+    avatar?: string,
 }
 
 interface UpdateUser {
@@ -19,9 +22,16 @@ export const useUserStore = defineStore('user', () => {
     const user = ref<User | null>(null)
     const isAuth = ref<boolean>(false)
 
+    const isAuthor = () => user?.value?.roles.includes('author')
+    const isAdmin = () => user?.value?.roles.includes('admin')
+
     const setUserData = (userData: User | null, authState: boolean) => {
         isAuth.value = authState
         user.value = userData
+
+        if (userData?.roles) {
+            user.value.roles = userData.roles.map(role => role.name)
+        }
     }
 
     const logout = () => {
@@ -78,6 +88,8 @@ export const useUserStore = defineStore('user', () => {
     return {
         user,
         isAuth,
+        isAdmin,
+        isAuthor,
         setUserData,
         logout,
         getUserInfo,
