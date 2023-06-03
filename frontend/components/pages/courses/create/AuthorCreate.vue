@@ -195,10 +195,10 @@ const saveCourse = async() => {
     isLoading.value = true
 
     try {
-        const message = await courseStore.createCourse(object)
+        const { message } = await courseStore.createCourse(object)
 
-        notify.success(description.message)
-        navigateTo('/settings')
+        notify.success(message)
+        navigateTo('/profile')
     } catch (e) {
         if (e?.response?.data) {
             notify.error(e.response.data.error || e.response.data.message)
