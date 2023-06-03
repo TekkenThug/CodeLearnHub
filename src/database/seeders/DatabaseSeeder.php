@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ProgramLanguageSeeder::class,
             CourseSeeder::class,
             NewsSeeder::class,
+            // UserSeeder::class,
         ]);
     }
 }
