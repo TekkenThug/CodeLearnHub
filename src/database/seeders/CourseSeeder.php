@@ -20,14 +20,25 @@ class CourseSeeder extends Seeder
             'description' => 'Основы PHP - языка backend',
             'cover' => 'https://www.php.net/images/meta-image.png',
             'program_language_id' => 1,
+            'students_count' => 472,
+            'is_active' => true
         ]);
 
         DB::table('courses')->insert([
-            'name' => 'Курс по Java',
-            'description' => 'ООП для чайников',
-            'students_count' => 4,
-            'cover' => 'https://static.vecteezy.com/system/resources/previews/020/111/553/original/java-editorial-logo-free-download-free-vector.jpg',
+            'name' => 'Курс по JavaScript',
+            'description' => 'Frontend разработка',
+            'students_count' => 241,
+            'cover' => 'https://i.pinimg.com/originals/7a/fb/04/7afb0491c91b2f9e9aac56667c3be677.jpg',
             'program_language_id' => 2,
+            'is_active' => true
+        ]);
+
+        DB::table('courses')->insert([
+            'name' => 'Курс по Python',
+            'description' => 'Основы популярного языка',
+            'students_count' => 339,
+            'cover' => 'https://images.hdqwalls.com/wallpapers/python-logo-4k-i6.jpg',
+            'program_language_id' => 3,
             'is_active' => true
         ]);
     }
