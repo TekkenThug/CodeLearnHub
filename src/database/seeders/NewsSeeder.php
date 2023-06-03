@@ -21,13 +21,13 @@ class NewsSeeder extends Seeder
         DB::table('news')->insert([
             'title' => 'Версия v.0.1.0',
             'text' => 'Первый патч вышел!',
-            'created_at' => $currentDate,
+            'added_at' => $currentDate,
         ]);
 
         DB::table('news')->insert([
             'title' => 'Версия v.0.1.1',
             'text' => 'Второй патч вышел!',
-            'created_at' => $currentDate,
+            'added_at' => $currentDate,
         ]);
     }
 }

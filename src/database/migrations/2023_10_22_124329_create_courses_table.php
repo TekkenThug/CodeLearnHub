@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->text('cover');
-            $table->unsignedBigInteger('program_language_id')->null();
-            $table->foreign('program_language_id')->references('id')->on('program_languages');
+            $table->unsignedBigInteger('program_language_id');
+            $table->foreign('program_language_id')->references('id')->on('program_languages')->onDelete('cascade');
             $table->double('rate')->default(0);
             $table->unsignedInteger('lessons_count')->default(0);
             $table->unsignedInteger('students_count')->default(0);

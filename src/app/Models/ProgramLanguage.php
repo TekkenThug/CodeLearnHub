@@ -10,8 +10,8 @@ class ProgramLanguage extends Model
 {
     use HasFactory;
 
-    public function courses()
+    public function course()
     {
-        return $this->hasMany(Course::class);
+        return $this->belongsTo(Course::class);
     }
 }
