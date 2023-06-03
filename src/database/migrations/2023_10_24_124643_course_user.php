@@ -23,6 +23,14 @@ return new class extends Migration
             $table->primary(['user_id', 'course_id']);
 
             $table->unsignedInteger('rate')->nullable();
+
+            $table->unsignedBigInteger('current_module_id');
+            $table->unsignedBigInteger('current_lesson_id');
+
+            $table->foreign('current_module_id')->references('id')->on('modules')->onDelete('cascade');
+            $table->foreign('current_lesson_id')->references('id')->on('lessons')->onDelete('cascade');
+            
+            $table->boolean('is_complete')->default(false);
         });
     }
 

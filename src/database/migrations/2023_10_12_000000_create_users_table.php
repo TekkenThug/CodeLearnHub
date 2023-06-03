@@ -19,8 +19,11 @@ return new class extends Migration
             $table->string('nickname')->unique();
             $table->string('password');
             $table->string('avatar')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->rememberToken();
+            $table->boolean('is_blocked')->default(false);
+            $table->string('block_reason')->nullable();
+            $table->boolean('is_owner')->default(false);
+            // $table->timestamp('email_verified_at')->nullable();
+            // $table->rememberToken();
             $table->timestamps();
         });
     }
