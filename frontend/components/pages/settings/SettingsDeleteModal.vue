@@ -56,10 +56,11 @@ const deleteAccount = async() => {
     padding: $offset-s
     background-color: $white
     border-radius: $r-m
-    max-width: 420px
+    max-width: 500px
 
 .title
     @include h2
+    color: $blue-main
     margin-bottom: $offset-xxs
 
 .top
