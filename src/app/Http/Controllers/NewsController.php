@@ -11,7 +11,7 @@ class NewsController extends Controller
     {
         return response()->json([
             'data' => [
-                'news' => News::orderBy('created_at', 'desc')->get()
+                'news' => News::orderBy('added_at', 'desc')->get()
             ]
         ]);
     }
