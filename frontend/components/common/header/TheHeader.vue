@@ -71,7 +71,7 @@ const navigation = computed(() => {
         },
         {
             name: 'Авторство',
-            visible: true,
+            visible: store.isAuth,
             link: '/courses/create'
         },
         {
