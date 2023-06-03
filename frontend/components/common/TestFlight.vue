@@ -2,7 +2,7 @@
     <div :class="$style.TestFlight">
         <div class="container">
             Cайт находится в тестовом режиме.
-            По всем техническим вопросам обращаться <a href="mailto:ignatov0131@gmail.com">ignatov0131@gmail.com</a>.
+            <!--            По всем техническим вопросам обращаться <a href="mailto:ignatov0131@gmail.com">ignatov0131@gmail.com</a>.-->
             Версия сайта - {{ version }}
         </div>
     </div>
