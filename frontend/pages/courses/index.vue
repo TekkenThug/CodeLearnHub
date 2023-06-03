@@ -15,25 +15,25 @@
     </main>
 </template>
 
-<script lang="ts" setup>
-import CoursesSearch from '~/components/pages/courses/CoursesSearch.vue'
-import CoursesSort from '~/components/pages/courses/CoursesSort.vue'
-import CourseList from '~/components/pages/courses/CoursesList.vue'
+<script setup>
+import CoursesSearch from '~/components/pages/courses/CoursesSearch'
+import CoursesSort from '~/components/pages/courses/CoursesSort'
+import CourseList from '~/components/pages/courses/CoursesList'
 import { useCourseStore } from '~/stores/course'
 
 const courseStore = useCourseStore()
 const searchValue = ref('')
 const courses = ref([])
-const isLoading = ref<boolean>(false)
-const sort = ref<{ value: string, desc: string }>({
+const isLoading = ref(false)
+const sort = ref({
     value: 'rate',
     desc: 'desc'
 })
-const setSearchValue = (value: string) => {
+const setSearchValue = (value) => {
     searchValue.value = value
     getCourses()
 }
-const setSort = (value: typeof sort.value) => {
+const setSort = (value) => {
     sort.value = value
     getCourses()
 }
@@ -53,7 +53,7 @@ const getCourses = async() => {
     }
 }
 
-onMounted(async() => {
+onBeforeMount(async() => {
     await getCourses()
 })
 </script>
