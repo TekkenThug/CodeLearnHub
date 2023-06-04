@@ -17,6 +17,7 @@ class Course extends Model
         'description',
         'cover',
         'program_language_id',
+        'author_id',
     ];
 
     public function users()
