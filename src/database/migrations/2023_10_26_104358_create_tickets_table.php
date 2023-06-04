@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('theme');
             $table->string('email');
             $table->unsignedBigInteger('admin_id')->nullable();
+            $table->boolean('resolve')->default(false);
 
             $table->foreign('admin_id')->references('id')->on('users');
             $table->timestamps();
