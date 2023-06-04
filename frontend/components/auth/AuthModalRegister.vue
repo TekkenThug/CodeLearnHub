@@ -83,7 +83,7 @@ const submitForm = handleSubmit((values) => {
         password: values.password
     })
         .then(() => {
-            notify.success('Регистрация прошла успешно! Проверьте электронную почту и подтвердите email')
+            notify.success('Регистрация прошла успешно!')
             emit('changeMode', 'login')
         })
         .catch((e) => {
