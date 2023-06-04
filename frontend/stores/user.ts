@@ -29,7 +29,8 @@ export const useUserStore = defineStore('user', () => {
         isAuth.value = authState
         user.value = userData
 
-        if (userData?.roles) {
+        if (userData?.roles && user.value) {
+            // @ts-ignore
             user.value.roles = userData.roles.map(role => role.name)
         }
     }
@@ -65,6 +66,7 @@ export const useUserStore = defineStore('user', () => {
         const form = new FormData()
 
         form.append('image', avatar)
+        // @ts-ignore
         form.append('id', user.value.id)
 
         return http.post('/api/v1/upload/avatar', form, {
