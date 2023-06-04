@@ -95,6 +95,6 @@ export const useUserStore = defineStore('user', () => {
         getUserInfo,
         updateUserData,
         deleteUser,
-        uploadAvatar,
+        uploadAvatar
     }
 })
