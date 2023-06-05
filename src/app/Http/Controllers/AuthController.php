@@ -6,13 +6,14 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     /**
-     * Register new user
+     * Регистрация пользователя
      */
     public function register(StoreUserRequest $request)
     {
@@ -33,18 +34,23 @@ class AuthController extends Controller
     }
 
     /**
-     * Login user
+     * Вход пользователя
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $credentials  = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $validated = $request->validated();
 
-        if (!Auth::attempt($credentials)) {
+        if (!Auth::attempt($validated)) {
             return response()->json([
                 'error' => 'Неверный логин или пароль'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $user = Auth::user();
+
+        if (User::find($user->id)->is_blocked) {
+            return response()->json([
+                'error' => 'Вы заблокированы по причине: ' . User::find($user->id)->block_reason
             ], Response::HTTP_UNAUTHORIZED);
         }
 
@@ -59,7 +65,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Logout user
+     * Выход пользователя
      */
     public function logout(Request $request)
     {
