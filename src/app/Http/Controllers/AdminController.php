@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\News;
+use App\Models\Ticket;
 use App\Models\ProgramLanguage;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -109,5 +110,43 @@ class AdminController extends Controller
         return response()->json([
             'message' => 'Новость успешно удалена'
         ]);
+    }
+
+    /**
+     * Взятие тикета
+     */
+    public function takeTicket(Request $request, $id)
+    {
+        $ticket = Ticket::findOrFail($id);
+
+        if ($ticket->resolve) {
+            return response()->json(['message' => 'Обращение уже разрешено'], 400);
+        }
+
+        if ($ticket->admin_id) {
+            return response()->json(['message' => 'Обращение уже разрешается'], 400);
+        }
+
+        $ticket->admin_id = $request->user()->id;
+        $ticket->save();
+
+        return response()->json(['message' => 'Обращение получено']);
+    }
+
+    /**
+     * Завершения тикета
+     */
+    public function checkResolve(Request $request, $id) 
+    {
+        $ticket = Ticket::findOrFail($id);
+
+        if ($ticket->resolve) {
+            return response()->json(['message' => 'Обращение уже разрешено'], 400);
+        }
+
+        $ticket->resolve = true;
+        $ticket->save();
+
+        return response()->json(['message' => 'Обращение успешно разрешено']);
     }
 }
