@@ -12,6 +12,28 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminController extends Controller
 {
     /**
+     * Получение списка пользователей
+     */
+    public function getAllUsers(Request $request)
+    {
+        if ($user->is_owner) {
+            return response()->json([
+                'data' => [
+                    'users' => User::all()
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'data' => [
+                'users' => User::whereDoesntHave('roles', function ($query) {
+                    $query->where('name', 'admin');
+                })->get()
+            ]
+        ]);
+    }
+
+    /**
      * Обновление данных пользователя
      */
     public function updateUser(Request $request, $id)
