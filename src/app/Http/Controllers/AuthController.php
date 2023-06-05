@@ -40,17 +40,17 @@ class AuthController extends Controller
     {
         $validated = $request->validated();
 
+        $user = User::where('email', $validated['email'])->first();
+
+        if ($user && $user->isBanned()) {
+            return response()->json([
+                'error' => 'Вы заблокированы по причине: ' . User::find($user->id)->block_reason
+            ], Response::HTTP_FORBIDDEN);
+        }
+
         if (!Auth::attempt($validated)) {
             return response()->json([
                 'error' => 'Неверный логин или пароль'
-            ], Response::HTTP_UNAUTHORIZED);
-        }
-
-        $user = Auth::user();
-
-        if (User::find($user->id)->is_blocked) {
-            return response()->json([
-                'error' => 'Вы заблокированы по причине: ' . User::find($user->id)->block_reason
             ], Response::HTTP_UNAUTHORIZED);
         }
 
