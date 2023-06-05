@@ -87,4 +87,16 @@ class User extends Authenticatable
     {
         return $this->roles->contains('name', $role);
     }
+
+    public function isBanned()
+    {
+        return $this->is_blocked;
+    }
+
+    public function ban($reason)
+    {
+        $this->is_blocked = true;
+        $this->block_reason = $reason;
+        $this->save();
+    }
 }
