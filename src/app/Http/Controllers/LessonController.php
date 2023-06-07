@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Course;
+use App\Models\ProgramLanguage;
 use App\Models\Module;
 use App\Models\Lesson;
 use App\Models\Comments;
+use App\Services\ProgramTest;
+
 
 class LessonController extends Controller
 {
@@ -91,5 +95,95 @@ class LessonController extends Controller
             ],
         ]);
     }
+
+    /**
+     * Проверка тестирования
+     */
+    public function checkTest(Request $request)
+    {
+        $lesson = Lesson::find($request->input('lessonId'));
+        $course = Course::find(Module::find($lesson->module_id))->first();
+        $courseLanguage = ProgramLanguage::find($course->program_language_id)->name;
+        $code = $request->input('code');
+        $lessonCode = $lesson->test_code;
+
+        $test = new ProgramTest();
+        $result = $test->run($courseLanguage, $code, $lessonCode);
+
+        if (!$result) {
+            return response()->json([
+                'message' => 'Ошибка! Проверьте код',
+                'data' => [
+                    'result' => $result
+                ]
+            ]);
+        }
+
+        $lessonOrder = null;
+        $moduleOrder = null;
+        $existedRecord = $request->user()->courses();
+        $nextLesson = Lesson::where('order', $lesson->order + 1)->where('module_id', $lesson->module_id);
+
+        if ($nextLesson->exists()) {
+            $module = Module::find($lesson->module_id);
+            $lessonOrder = $nextLesson->first()->order;
+            $moduleOrder = $module->order;
+
+            $existedRecord->sync([
+                $course->id => [
+                    'current_module_id' => $module->id,
+                    'current_lesson_id' => $nextLesson->first()->id
+                ]
+            ]);
+
+            return response()->json([
+                'message' => 'Отлично! Урок пройден!',
+                'data' => [
+                    'result' => $result,
+                    'module_order' => $moduleOrder,
+                    'lesson_order' => $lessonOrder,
+                    'bebra' => $nextLesson->first()->id
+                ]
+            ]);
+        }
+
+        $nextModule = Module::where('order', $lesson->module->order + 1)->where('id', $lesson->module_id);
+
+        if ($nextModule->exists()) {
+            $moduleOrder = $nextModule->first()->order;
+            $lesson = Lesson::where('module_id', $nextModule->first()->id)
+            ->where('order', 1)
+            ->first();
+
+            $existedRecord->sync([
+                $course->id => [
+                    'current_module_id' => $nextModule->first()->id,
+                    'current_lesson_id' => $lesson->id
+                ]
+            ]);
+
+            return response()->json([
+                'message' => 'Отлично! Урок пройден!',
+                'data' => [
+                    'result' => $result,
+                    'module_order' => $moduleOrder,
+                    'lesson_order' => $lesson->order,
+                ]
+            ]);
+        }
+
+        $existedRecord->sync([
+            $course->id => [
+                'is_complete' => true,
+            ]
+        ]);
+
+        return response()->json([
+            'message' => 'Отлично! Урок пройден!',
+            'data' => [
+                'result' => $result,
+                'is_done' => true
+            ]
+        ]);
     }
 }
