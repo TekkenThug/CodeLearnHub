@@ -21,5 +21,15 @@ class UserSeeder extends Seeder
             'email' => 'ignatov0131@gmail.com',
             'password' => Hash::make('Gjgf1337@', ['rounds' => 12]),
         ]);
+
+        DB::table('role_user')->insert([
+            'user_id' => 1,
+            'role_id' => 1,
+        ]);
+
+        DB::table('role_user')->insert([
+            'user_id' => 1,
+            'role_id' => 3,
+        ]);
     }
 }

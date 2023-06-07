@@ -17,9 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             ProgramLanguageSeeder::class,
-            CourseSeeder::class,
-            NewsSeeder::class,
-            // UserSeeder::class,
+            // CourseSeeder::class,
+            // NewsSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
