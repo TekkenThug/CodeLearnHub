@@ -8,7 +8,10 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\LessonController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProgramLanguageController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,21 +29,66 @@ Route::prefix('v1')->group(function() {
         Route::post('/register', [AuthController::class, 'register']);
     });
 
-    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-        return $request->user();
+    Route::prefix('courses')->group(function () {
+        Route::get('/', [CourseController::class, 'index']);
+        Route::get('/landing', [CourseController::class, 'getLandingCourses']);
+
+        Route::middleware('auth:sanctum')->group(function() {
+            Route::middleware('role:author')->group(function() {
+                Route::post('/', [CourseController::class, 'store']);
+            });
+
+            Route::get('/my', [CourseController::class, 'myCourses']);
+            Route::get('/authored', [CourseController::class, 'authoredCourses']);
+            Route::post('/record', [CourseController::class, 'recordToCourse']);
+        });
     });
 
-    Route::get('/courses', [CourseController::class, 'index']);
-    Route::post('/courses', [CourseController::class, 'store']);
-
-
+    Route::get('/courses/active/{id}', [CourseController::class, 'getAvailableCourse']);
+    Route::get('/courses/{id}', [CourseController::class, 'show']);
     Route::post('/tickets', [TicketController::class, 'openTicket']);
     Route::get('/news', [NewsController::class, 'get']);
-    Route::get('/program-languages/accepted', [ProgramLanguageController::class, 'getAcceptedCourses']);
 
     Route::middleware('auth:sanctum')->group(function() {
-        Route::resource('users', UserController::class);
-
+        Route::get('/user', [UserController::class, 'me']);
+        
+        Route::post('/comments', [CommentController::class, 'post']);
+        // Route::get('/lessons', [LessonController::class, 'get']);
         Route::post('/upload/avatar', [UploadController::class, 'processAvatar']);
+        Route::get('/program-languages/accepted', [ProgramLanguageController::class, 'getAcceptedCourses']);
+
+        Route::prefix('users')->group(function() {
+            Route::put('/{id}', [UserController::class, 'update']);
+            Route::delete('/{id}', [UserController::class, 'destroy']);
+        });
+
+        Route::prefix('lessons')->group(function() {
+            Route::get('/teach', [LessonController::class, 'getForTeach']);
+            Route::post('/check', [LessonController::class, 'checkTest']);
+        });
+
+        Route::middleware('role:admin')->group(function() {
+            Route::prefix('admin')->group(function() {
+                Route::prefix('users')->group(function() {
+                    Route::put('/update/{id}', [AdminController::class, 'updateUser']);
+                    Route::put('/ban/{id}', [AdminController::class, 'banUser']);
+                });
+
+                Route::prefix('languages')->group(function() {
+                    Route::post('/', [AdminController::class, 'addLanguage']);
+                });
+
+                Route::prefix('news')->group(function() {
+                    Route::post('/', [AdminController::class, 'postNews']);
+                    Route::put('/{id}', [AdminController::class, 'updateNews']);
+                    Route::delete('/{id}', [AdminController::class, 'deleteNews']);
+                });
+
+                Route::prefix('tickets')->group(function() {
+                    Route::post('/resolve/{id}', [AdminController::class, 'checkResolve']);
+                    Route::post('/take/{id}', [AdminController::class, 'takeTicket']);
+                });
+            });
+        });
     });
 });
