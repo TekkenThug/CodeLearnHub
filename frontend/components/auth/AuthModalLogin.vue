@@ -31,11 +31,11 @@
         </form>
 
         <div class="auth-modal__bottom">
-            <UiButtonLight class="auth-modal__button" @click="$emit('changeMode', 'forgot')">
-                Забыли пароль?
-            </UiButtonLight>
+            <!--            <UiButtonLight class="auth-modal__button" @click="$emit('changeMode', 'forgot')">-->
+            <!--                Забыли пароль?-->
+            <!--            </UiButtonLight>-->
 
-            <span>или</span>
+            <!--            <span>или</span>-->
 
             <UiButtonLight class="auth-modal__button" @click="$emit('changeMode', 'register')">
                 Нет аккаунта?
