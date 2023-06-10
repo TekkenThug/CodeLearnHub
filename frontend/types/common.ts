@@ -1,16 +1,21 @@
-export interface CourseTag {
-  /**
-   * Background color
-   */
-  background: string,
+export interface News {
+    /**
+     * News title
+     */
+    title: string,
 
-  /**
-   * Color
-   */
-  color: string,
+    /**
+     * News text
+     */
+    text: string,
 
-  /**
-   * Text content
-   */
-  text: string
+    /**
+     * Admin id, who is posted
+     */
+    admin_id?: number
+
+    /**
+     * Publication time
+     */
+    added_at: string,
 }
