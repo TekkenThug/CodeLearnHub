@@ -16,7 +16,7 @@ class AdminController extends Controller
      */
     public function getAllUsers(Request $request)
     {
-        if ($user->is_owner) {
+        if ($request->user()->is_owner) {
             return response()->json([
                 'data' => [
                     'users' => User::all()
@@ -101,6 +101,7 @@ class AdminController extends Controller
     public function postNews(Request $request)
     {
         $news = new News($request->all());
+        $news->admin_id = $request->user()->id;
         $news->save();
 
         return response()->json(['message' => 'Новость успешно создана']);
