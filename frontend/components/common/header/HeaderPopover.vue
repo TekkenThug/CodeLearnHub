@@ -89,7 +89,7 @@ import AvatarImage from '~/components/common/avatar/AvatarImage'
 const store = useUserStore()
 const logout = async() => await store.logout()
 const isAuth = computed(() => store.isAuth)
-const isAdmin = computed(() => store.isAdmin)
+const isAdmin = computed(() => store.isAdmin())
 const avatar = computed(() => store?.user?.avatar)
 
 const isMenuShown = ref(false)
