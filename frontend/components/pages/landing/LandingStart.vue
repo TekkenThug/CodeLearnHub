@@ -90,6 +90,10 @@ const handlerClick = () => {
     color: $blue-main
     margin-bottom: $offset-m
 
+    @include responsive($mobile)
+        font-size: 21px
+        line-height: 32px
+
 .description
     @include h3
     color: $blue-dark-card
