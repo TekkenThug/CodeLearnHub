@@ -15,13 +15,12 @@
                     :items="navigation"
                 />
 
-                <button
-                    :class="$style.burgerButton"
+                <HeaderPopover />
 
-                    @click="openMobilePopup"
-                >
-                    <Icon name="carbon:menu" />
-                </button>
+                <HeaderMobileEntrance
+                    v-if="!isAuth"
+                    @open="processPopup('login')"
+                />
             </div>
         </div>
     </header>
@@ -30,8 +29,9 @@
 <script setup lang="ts">
 import { useUserStore } from '~/stores/user'
 import AuthModal from '~/components/auth/AuthModal.vue'
-import HeaderMenuModal from '~/components/common/header/HeaderMenuModal.vue'
 import HeaderNav from '~/components/common/header/HeaderNav.vue'
+import HeaderPopover from '~/components/common/header/HeaderPopover'
+import HeaderMobileEntrance from '~/components/common/header/HeaderMobileEntrance'
 
 const store = useUserStore()
 
@@ -47,10 +47,7 @@ const processPopup = (value: PopupMode) => {
     openPopup()
 }
 
-const http = useHttp()
-const logout = () => {
-    return http.post('/logout', {}).then(() => store.logout())
-}
+const isAuth = computed(() => store.isAuth)
 
 const navigation = computed(() => {
     return [
@@ -70,34 +67,11 @@ const navigation = computed(() => {
             link: '/contacts'
         },
         {
-            name: 'Авторство',
-            visible: store.isAuth,
-            link: '/courses/create'
-        },
-        {
             name: 'Войти',
-            visible: !store.isAuth,
+            visible: !isAuth.value,
             callback: () => processPopup('login')
-        },
-        {
-            name: 'Профиль',
-            visible: store.isAuth,
-            link: '/profile'
-        },
-        {
-            name: 'Выйти',
-            visible: store.isAuth,
-            callback: async() => {
-                await logout()
-                navigateTo('/')
-            }
         }
     ]
-})
-
-const { open: openMobilePopup } = useModal({
-    component: HeaderMenuModal,
-    attrs: { items: navigation }
 })
 </script>
 
@@ -108,7 +82,7 @@ const { open: openMobilePopup } = useModal({
     left: 0
     z-index: $z-header
     width: 100%
-    padding: $offset-xxs
+    padding: $offset-xxs 0
     background-color: $white
     box-shadow: 0 4px 30px $blue-main
 
@@ -124,11 +98,4 @@ const { open: openMobilePopup } = useModal({
 .nav
     @include responsive($mobile)
         display: none
-
-.burgerButton
-    display: none
-    margin-left: auto
-
-    @include responsive($mobile)
-        display: block
 </style>
