@@ -71,6 +71,9 @@ const { closeAll } = useVfm()
     background-position: left
     background-repeat: no-repeat
 
+    @include responsive($mobile)
+        display: none
+
     &::before
       content: ''
       position: absolute
