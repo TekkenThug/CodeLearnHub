@@ -70,6 +70,7 @@ Route::prefix('v1')->group(function() {
         Route::middleware('role:admin')->group(function() {
             Route::prefix('admin')->group(function() {
                 Route::prefix('users')->group(function() {
+                    Route::get('/', [AdminController::class, 'getAllUsers']);
                     Route::put('/update/{id}', [AdminController::class, 'updateUser']);
                     Route::put('/ban/{id}', [AdminController::class, 'banUser']);
                 });
