@@ -10,9 +10,9 @@
 
                 <div :class="$style.content">
                     <transition name="fade" mode="out-in">
-                        <AdminUserControl
-                            v-if="navigation === 'users'"
-                        />
+                        <AdminUserControl v-if="navigation === 'users'" />
+
+                        <AdminNewsControl v-else-if="navigation === 'news'" />
                     </transition>
                 </div>
             </div>
@@ -23,6 +23,7 @@
 <script setup>
 import AdminSide from '~/components/pages/admin/AdminSide'
 import AdminUserControl from '~/components/pages/admin/AdminUserControl'
+import AdminNewsControl from '~/components/pages/admin/AdminNewsControl'
 
 const navigation = ref('users')
 </script>
@@ -31,11 +32,22 @@ const navigation = ref('users')
 .wrapper
     display: flex
 
+    @include responsive($mobile)
+        flex-direction: column
+
 .aside
     width: 280px
     margin-right: $offset-m
 
+    @include responsive($mobile)
+        margin-right: 0
+        margin-bottom: $offset-m
+        width: 100%
+
 .content
     margin-left: auto
     flex-grow: 1
+
+    @include responsive($mobile)
+        margin-left: 0
 </style>
