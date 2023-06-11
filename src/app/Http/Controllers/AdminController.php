@@ -78,6 +78,14 @@ class AdminController extends Controller
     }
 
     /**
+     * Получение списка языков программирования
+     */
+    public function getLanguages(Request $request)
+    {
+        return response()->json(['data' => ProgramLanguage::orderBy('id')->get()]);
+    }
+
+    /**
      * Добавления языка программирования
      */
     public function addLanguage(Request $request)
@@ -88,11 +96,14 @@ class AdminController extends Controller
             return response()->json(['message' => 'Язык уже существует'], 400);
         }
 
-        ProgramLanguage::create([
+        $language = ProgramLanguage::create([
             'name' => $language
         ]);
 
-        return response()->json(['message' => 'Язык создан успешно']);
+        return response()->json([
+            'message' => 'Язык создан успешно',
+            'data' => $language,
+        ]);
     }
 
     /**
