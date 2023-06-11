@@ -164,7 +164,7 @@ class CourseController extends Controller
         $course = Course::create([
             'name' => $request['name'],
             'description' => $request['description'],
-            'cover' =>  $request['cover'],
+            'cover' =>  'empty',
             'program_language_id' => $request['program_language'],
             'author_id' => $request->user()->id,
         ]);
@@ -197,7 +197,8 @@ class CourseController extends Controller
         }
 
         return response()->json([
-            'message' => 'Курс создан успешно. После проверки он отобразится в Вашем профиле.'
+            'message' => 'Курс создан успешно. После проверки он отобразится в Вашем профиле.',
+            'data' => $course,
         ]);
     }
 

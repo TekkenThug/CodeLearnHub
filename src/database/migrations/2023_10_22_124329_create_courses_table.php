@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->text('cover');
+            $table->text('cover')->nullable();
             $table->unsignedBigInteger('program_language_id');
             $table->foreign('program_language_id')->references('id')->on('program_languages')->onDelete('cascade');
             $table->double('rate')->default(0);
