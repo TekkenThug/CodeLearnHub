@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
 {
+    /**
+     * Загрузка аватара
+     */
     public function processAvatar(Request $request)
     {
         $image = $request->file('image');
@@ -21,10 +24,9 @@ class UploadController extends Controller
         }
 
         if ($image) {
-            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
-            Storage::disk('public')->put($filename, file_get_contents($image));
-        
-            $url = Storage::url($filename);
+            $filename = 'avatars/' . uniqid() . '.' . $image->getClientOriginalExtension();
+            Storage::disk('yandex')->put($filename, file_get_contents($image));
+            $url = Storage::disk('yandex')->url($filename);
 
             $user->avatar = $url;
             $user->save();
