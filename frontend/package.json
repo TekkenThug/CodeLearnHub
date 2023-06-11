@@ -19,6 +19,9 @@
     "nuxt-icon": "^0.2.10"
   },
   "dependencies": {
+    "@editorjs/editorjs": "^2.27.0",
+    "@editorjs/header": "^2.7.0",
+    "@editorjs/list": "^1.8.0",
     "@nuxtjs/svg-sprite": "^1.0.2",
     "@splidejs/vue-splide": "^0.6.12",
     "@vee-validate/zod": "^4.7.3",
