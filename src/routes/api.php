@@ -76,6 +76,7 @@ Route::prefix('v1')->group(function() {
                 });
 
                 Route::prefix('languages')->group(function() {
+                    Route::get('/', [AdminController::class, 'getLanguages']);
                     Route::post('/', [AdminController::class, 'addLanguage']);
                 });
 
