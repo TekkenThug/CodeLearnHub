@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Course;
+
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Storage;
@@ -42,5 +44,40 @@ class UploadController extends Controller
         return response()->json([
             'message' => 'Файл пуст',
         ], Response::HTTP_NOT_FOUND); 
+    }
+
+    /**
+     * Загрузка обложки курса
+     */
+    public function processCourseCover(Request $request)
+    {
+        $image = $request->file('image');
+        $course = Course::find($request->input('id'));
+
+        if (!$image) {
+            return response()->json([
+                'message' => 'Файл пуст',
+            ], 401); 
+        }
+
+        if (empty($course)) {
+            return response()->json([
+                'message' => 'Курса не существует',
+            ], 404); 
+        }
+         
+        $filename = 'covers/' . uniqid() . '.' . $image->getClientOriginalExtension();
+        Storage::disk('yandex')->put($filename, file_get_contents($image));
+        $url = Storage::disk('yandex')->url($filename);
+
+        $course->cover = $url;
+        $course->save();
+
+        return response()->json([
+            'message' => 'Обложка успешно загружена',
+            'data' => [
+                'image' => $url
+            ]
+        ]); 
     }
 }

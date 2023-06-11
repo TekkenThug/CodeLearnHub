@@ -54,7 +54,6 @@ Route::prefix('v1')->group(function() {
         
         Route::post('/comments', [CommentController::class, 'post']);
         // Route::get('/lessons', [LessonController::class, 'get']);
-        Route::post('/upload/avatar', [UploadController::class, 'processAvatar']);
         Route::get('/program-languages/accepted', [ProgramLanguageController::class, 'getAcceptedCourses']);
 
         Route::prefix('users')->group(function() {
@@ -65,6 +64,11 @@ Route::prefix('v1')->group(function() {
         Route::prefix('lessons')->group(function() {
             Route::get('/teach', [LessonController::class, 'getForTeach']);
             Route::post('/check', [LessonController::class, 'checkTest']);
+        });
+
+        Route::prefix('upload')->group(function() {
+            Route::post('/avatar', [UploadController::class, 'processAvatar']);
+            Route::post('/cover', [UploadController::class, 'processCourseCover']);
         });
 
         Route::middleware('role:admin')->group(function() {
