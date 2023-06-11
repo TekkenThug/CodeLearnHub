@@ -12,6 +12,8 @@
                     <transition name="fade" mode="out-in">
                         <AdminUserControl v-if="navigation === 'users'" />
 
+                        <AdminLanguagesControl v-else-if="navigation === 'languages'" />
+
                         <AdminNewsControl v-else-if="navigation === 'news'" />
                     </transition>
                 </div>
@@ -24,6 +26,7 @@
 import AdminSide from '~/components/pages/admin/AdminSide'
 import AdminUserControl from '~/components/pages/admin/AdminUserControl'
 import AdminNewsControl from '~/components/pages/admin/AdminNewsControl'
+import AdminLanguagesControl from '~/components/pages/admin/AdminLanguagesControl'
 
 const navigation = ref('users')
 </script>
