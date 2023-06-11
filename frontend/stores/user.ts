@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { News } from '~/types/common'
 
 type Role = 'student' | 'admin' | 'author'
 
@@ -88,6 +89,19 @@ export const useUserStore = defineStore('user', () => {
         })
     }
 
+    const getNews = async() => {
+        const { data } = await http.get('/api/v1/news').then(({ data }) => data)
+
+        return data.news.map((item: News) => ({
+            ...item,
+            text: JSON.parse(item.text),
+            added_at: new Date(item.added_at).toLocaleDateString('ru-RU', {
+                hour: 'numeric',
+                minute: 'numeric'
+            })
+        }))
+    }
+
     return {
         user,
         isAuth,
@@ -98,6 +112,7 @@ export const useUserStore = defineStore('user', () => {
         getUserInfo,
         updateUserData,
         deleteUser,
-        uploadAvatar
+        uploadAvatar,
+        getNews,
     }
 })
