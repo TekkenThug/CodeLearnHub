@@ -56,6 +56,15 @@ return [
             'throw' => false,
         ],
 
+        'yandex' => [
+            'driver' => 's3',
+            'key' => env('YANDEX_CLOUD_KEY'),
+            'secret' => env('YANDEX_CLOUD_SECRET_KEY'),
+            'region' => env('YANDEX_CLOUD_REGION'),
+            'bucket' => env('YANDEX_CLOUD_BUCKET'),
+            'endpoint' => env('YANDEX_CLOUD_ENDPOINT'),
+            'use_path_style_endpoint' => true
+        ]
     ],
 
     /*
