@@ -17,7 +17,8 @@ export default defineNuxtConfig({
             title: 'CodeLearnHub',
 
             link: [
-                { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Unbounded:wght@300;400;500;600&display=swap' }
+                { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Unbounded:wght@300;400;500;600&display=swap' },
+                { rel: 'icon', type: 'image/x-icon', href: '/favicon/favicon.ico' }
             ]
         },
 
