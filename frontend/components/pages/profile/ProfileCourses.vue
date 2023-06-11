@@ -7,21 +7,23 @@
             <slot />
         </div>
 
-        <NuxtLink
-            v-for="course in courses"
-            :key="course.id"
-            :to="`/courses/${course.id}`"
-            :class="$style.courseLink"
-        >
-            <CourseCard
-                :class="$style.course"
-                :image="course.cover"
-                :title="course.name"
-                :description="course.description"
-                :lessons-count="course.lessons_count"
-                :students-count="course.students_count"
-            />
-        </NuxtLink>
+        <div v-else :class="$style.courseList">
+            <NuxtLink
+                v-for="course in courses"
+                :key="course.id"
+                :to="`/courses/${course.id}`"
+                :class="$style.courseLink"
+            >
+                <CourseCard
+                    :class="$style.course"
+                    :image="course.cover"
+                    :title="course.name"
+                    :description="course.description"
+                    :lessons-count="course.lessons_count"
+                    :students-count="course.students_count"
+                />
+            </NuxtLink>
+        </div>
     </div>
 </template>
 
@@ -46,6 +48,12 @@ const props = defineProps({
     flex-direction: column
     align-items: flex-start
     gap: $offset-xs
+
+.courseList
+    width: 100%
+    display: flex
+    flex-wrap: wrap
+    gap: 24px
 
 .courseLink
     @include trans
