@@ -181,7 +181,6 @@ const saveCourse = async() => {
     const object = {
         name: name.value,
         description: description.value,
-        cover: cover.value,
         program_language: language.value.id,
         modules: modules.value.map((item, index) => {
             return {
@@ -195,7 +194,8 @@ const saveCourse = async() => {
     isLoading.value = true
 
     try {
-        const { message } = await courseStore.createCourse(object)
+        const { message, data } = await courseStore.createCourse(object)
+        const res = await courseStore.uploadCourseCover(data.id, cover.value)
 
         notify.success(message)
         navigateTo('/profile')

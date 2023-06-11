@@ -48,13 +48,30 @@ export const useCourseStore = defineStore('course', () => {
         moduleOrder: string | number,
         lessonOrder: string | number
     ) => {
-        return http.get('/api/v1/lessons', {
-            params: { courseId, moduleOrder, lessonOrder, forTeach: true }
+        return http.get('/api/v1/lessons/teach', {
+            params: { courseId, moduleOrder, lessonOrder }
         }).then(({ data }) => data)
     }
 
     const postComment = (lessonId: string | number, text: string) => {
         return http.post('/api/v1/comments', { lessonId, text }).then(({ data }) => data)
+    }
+
+    const checkTest = (code: string, lessonId: string | number) => {
+        return http.post('/api/v1/lessons/check', { code, lessonId }).then(({ data }) => data)
+    }
+
+    const uploadCourseCover = (id: number, file: File) => {
+        const form = new FormData()
+
+        form.append('id', id.toString())
+        form.append('image', file)
+
+        return http.post('/api/v1/upload/cover', form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(({ data }) => data)
     }
 
     return {
@@ -69,6 +86,8 @@ export const useCourseStore = defineStore('course', () => {
         getMyAuthoredCourses,
         startCourse,
         getLessonInfo,
-        postComment
+        postComment,
+        checkTest,
+        uploadCourseCover
     }
 })
