@@ -3,15 +3,15 @@
         <tr :class="$style.head">
             <th
                 v-for="item in head"
-                :key="item"
+                :key="item.id"
                 :class="$style.cell"
             >
-                {{ item }}
+                {{ item.title }}
             </th>
         </tr>
 
         <tr
-            v-for="(row, index) in rows"
+            v-for="(row, index) in mappedRows"
             :key="index"
             :class="$style.row"
         >
@@ -37,6 +37,20 @@ const props = defineProps({
         type: Array,
         default: () => ([])
     }
+})
+
+const mappedRows = computed(() => {
+    const orderedHead = props.head.map(item => item.key)
+
+    return props.rows.map((row) => {
+        const newRow = {}
+
+        orderedHead.forEach((item) => {
+            newRow[item] = row[item]
+        })
+
+        return newRow
+    })
 })
 </script>
 
