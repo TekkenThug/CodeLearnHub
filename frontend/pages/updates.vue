@@ -29,10 +29,7 @@
                             </strong>
                         </div>
 
-                        <div
-                            :class="$style.text"
-                            v-html="item.text"
-                        />
+                        <UiEditorBlockWrap :blocks="item.text" />
                     </li>
                 </ul>
 
@@ -45,15 +42,15 @@
 </template>
 
 <script setup>
-const isLoading = ref(true)
-const http = useHttp()
+import { useUserStore } from '~/stores/user'
+import UiEditorBlockWrap from '~/components/ui/blocks/UiEditorBlockWrap'
 
+const isLoading = ref(true)
+const user = useUserStore()
 const updates = ref([])
 
 onBeforeMount(async() => {
-    const { data } = await http.get('/api/v1/news').then(({ data }) => data)
-
-    updates.value = data.news.map(item => ({ ...item, added_at: new Date(item.added_at).toLocaleDateString() }))
+    updates.value = await user.getNews()
     isLoading.value = false
 })
 </script>
@@ -71,45 +68,23 @@ onBeforeMount(async() => {
 
 .article
     &:not(:first-child)
-        padding-top: 70px
-
-        @include responsive($mobile)
-            padding-top: 40px
+        padding-top: 40px
 
     &:not(:last-child)
         position: relative
-        padding-bottom: 70px
+        padding-bottom: 40px
         border-bottom: 1px solid $gray-100
 
-        @include responsive($mobile)
-            padding-bottom: 40px
-
 .articleTop
-    margin-bottom: $offset-s
+    margin-bottom: $offset-l
     color: $blue-dark-card
 
 .articleTitle
     @include h2
     font-size: 24px
-    margin-bottom: 8px
+    margin-bottom: 5px
 
 .articleDate
     font-weight: 500
     font-size: 14px
-
-.text
-    p
-        margin-bottom: $offset-xs
-
-    ul
-        padding-left: $offset-xs
-
-    li
-        list-style-type: circle
-
-        &:first-child
-            margin-top: 5px
-
-        &:not(:last-child)
-            margin-bottom: $offset-xxs
 </style>
