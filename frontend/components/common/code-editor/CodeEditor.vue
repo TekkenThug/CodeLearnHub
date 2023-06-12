@@ -38,7 +38,6 @@ onMounted(() => {
     // editorInstance.value.addLanguage('java', languages.java)
 
     editorInstance.value.onUpdate((code) => {
-        console.log('bebra')
         content.value = code
         emits('change', content.value)
     })
