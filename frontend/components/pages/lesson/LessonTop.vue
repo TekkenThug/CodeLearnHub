@@ -11,17 +11,19 @@
             <p>{{ subtitle }}</p>
         </div>
 
-        <div
-            v-if="!rate"
-            :class="$style.right"
-        >
-            Оцените курс
+        <transition name="fade" mode="out-in">
+            <div
+                v-if="!rate"
+                :class="$style.right"
+            >
+                Оцените курс
 
-            <UiStars
-                :class="$style.rightStars"
-                @select="passRating"
-            />
-        </div>
+                <UiStars
+                    :class="$style.rightStars"
+                    @select="passRating"
+                />
+            </div>
+        </transition>
     </div>
 </template>
 
