@@ -170,6 +170,7 @@ class CourseController extends Controller
         ]);
 
         $modules = $request['modules'];
+        $lessonsCount = 0;
         if (!empty($modules)) {
             // Перебираем элементы массива
             foreach ($modules as $module) {
@@ -191,10 +192,15 @@ class CourseController extends Controller
                             'order' => $lesson['order'],
                             'module_id' => $createdModule->id,
                         ]);
+
+                        ++$lessonsCount;
                     }
                 }
             }
         }
+
+        $course->lessons_count = $lessonsCount;
+        $course->save();
 
         return response()->json([
             'message' => 'Курс создан успешно. После проверки он отобразится в Вашем профиле.',
