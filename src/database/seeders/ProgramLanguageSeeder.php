@@ -9,10 +9,7 @@ use Illuminate\Support\Facades\DB;
 class ProgramLanguageSeeder extends Seeder
 {
     private $languages = [
-        'PHP',
         'JavaScript',
-        'Python',
-        'Java'
     ];
 
     /**
