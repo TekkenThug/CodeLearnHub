@@ -74,6 +74,14 @@ export const useCourseStore = defineStore('course', () => {
         }).then(({ data }) => data)
     }
 
+    const getUserRating = (id: number) => {
+        return http.get('/api/v1/courses/my-rating', { params: { id } }).then(({ data }) => data)
+    }
+
+    const postUserRating = (id: number, rate: number) => {
+        return http.post('/api/v1/courses/rate', { id, rate }).then(({ data }) => data)
+    }
+
     return {
         popularCourses,
         getLandingCourses,
@@ -88,6 +96,8 @@ export const useCourseStore = defineStore('course', () => {
         getLessonInfo,
         postComment,
         checkTest,
-        uploadCourseCover
+        uploadCourseCover,
+        getUserRating,
+        postUserRating
     }
 })
