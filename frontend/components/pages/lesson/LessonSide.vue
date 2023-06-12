@@ -18,10 +18,10 @@
 
         <div :class="$style.content">
             <transition name="fade" mode="out-in">
-                <div
+                <UiEditorBlockWrap
                     v-if="activeTab === 'lesson'"
+                    :blocks="description"
                     :class="$style.description"
-                    v-html="description"
                 />
 
                 <LessonCommentSection
@@ -38,6 +38,7 @@
 
 <script setup>
 import LessonCommentSection from '~/components/pages/lesson/comment/LessonCommentSection'
+import UiEditorBlockWrap from '~/components/ui/blocks/UiEditorBlockWrap'
 
 const emits = defineEmits(['sendComment'])
 const props = defineProps(
