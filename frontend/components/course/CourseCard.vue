@@ -5,9 +5,25 @@
         </div>
 
         <div :class="$style.info">
-            <h3 :class="$style.title">
-                {{ title }}
-            </h3>
+            <div :class="$style.top">
+                <h3 :class="$style.title">
+                    {{ title }}
+                </h3>
+
+                <div
+                    v-if="showProgress"
+                    :class="$style.progress"
+                >
+                    {{ progressOnCourse }} %
+
+                    <div :class="$style.progressBar">
+                        <span
+                            :style="{ width: `${progressOnCourse}%` }"
+                            :class="$style.progressBarFill"
+                        />
+                    </div>
+                </div>
+            </div>
 
             <p :class="$style.description">
                 {{ description }}
@@ -44,10 +60,17 @@ interface CourseCard {
     title: string,
     description?: string,
     lessonsCount?: number,
-    studentsCount?: number
+    studentsCount?: number,
+    progressCount?: number,
 }
 
-const props = defineProps<CourseCard>()
+interface Additional {
+    showProgress?: boolean
+}
+
+interface Props extends CourseCard, Additional {}
+
+const props = defineProps<Props>()
 
 const lessonPluralize = computed(() => {
     if (!props.lessonsCount) { return '' }
@@ -58,6 +81,14 @@ const studentPluralize = computed(() => {
     if (!props.studentsCount) { return '' }
 
     return `${props.studentsCount} ${pluralize(props.studentsCount, ['студент', 'студента', 'студентов'])}`
+})
+
+const progressOnCourse = computed(() => {
+    if (!props.lessonsCount || typeof props.progressCount !== 'number') {
+        return ''
+    }
+
+    return props.progressCount * 100
 })
 </script>
 
@@ -86,14 +117,46 @@ const studentPluralize = computed(() => {
     padding: $offset-m
     flex-grow: 1
 
+.top
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: $offset-xs
+
 .title
     @include p1
     font-weight: 700
-    margin-bottom: $offset-xs
 
 .description
     @include p2
     margin-bottom: $offset-xs
+    display: -webkit-box /* Добавление вендорного префикса для поддержки браузерами */
+    -webkit-box-orient: vertical /* Установка вертикальной ориентации блока */
+    -webkit-line-clamp: 2 /* Ограничение количества отображаемых строк */
+    overflow: hidden /* Скрытие текста, выходящего за пределы блока */
+    text-overflow: ellipsis /* Добавление многоточия в конце текста */
+
+.progress
+    @include h3
+    display: flex
+    flex-direction: column
+    align-items: center
+    color: $blue-dark-card
+
+.progressBar
+    position: relative
+    background-color: $blue-main
+    height: 4px
+    width: 75px
+    border-radius: 4px
+    overflow: hidden
+
+.progressBarFill
+    position: absolute
+    background-color: $blue-dark-card
+    height: 100%
+    top: 0
+    left: 0
 
 .statistic
     display: flex

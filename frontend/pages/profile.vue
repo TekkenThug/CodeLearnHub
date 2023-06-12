@@ -15,7 +15,7 @@
                     class="section"
                     title="Мои курсы"
                 >
-                    <ProfileCourses :courses="userCourses">
+                    <ProfileCourses :courses="userCourses" :show-progress="true">
                         У Вас нет курсов к прохождению
 
                         <NuxtLink to="/courses">

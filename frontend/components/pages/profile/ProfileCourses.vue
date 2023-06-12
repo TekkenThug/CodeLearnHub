@@ -19,6 +19,8 @@
                     :image="course.cover"
                     :title="course.name"
                     :description="course.description"
+                    :progress-count="course.progress"
+                    :show-progress="showProgress"
                     :lessons-count="course.lessons_count"
                     :students-count="course.students_count"
                 />
@@ -34,6 +36,11 @@ const props = defineProps({
     courses: {
         type: Array,
         default: () => ([])
+    },
+
+    showProgress: {
+        type: Boolean,
+        default: false
     }
 })
 </script>
