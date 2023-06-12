@@ -48,8 +48,10 @@ class UserController extends Controller
     /**
      * Удаление аккаунта
      */
-    public function destroy(User $user)
+    public function destroy(Request $request)
     {
+        $user = $request->user();
+
         $this->authorize('update', $user);
 
         $user->delete();
