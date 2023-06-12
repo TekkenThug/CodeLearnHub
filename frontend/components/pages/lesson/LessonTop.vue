@@ -10,10 +10,25 @@
 
             <p>{{ subtitle }}</p>
         </div>
+
+        <div
+            v-if="!rate"
+            :class="$style.right"
+        >
+            Оцените курс
+
+            <UiStars
+                :class="$style.rightStars"
+                @select="passRating"
+            />
+        </div>
     </div>
 </template>
 
 <script setup>
+import UiStars from '~/components/ui/stars/UiStars'
+
+const emits = defineEmits(['select-rating'])
 const props = defineProps({
     title: {
         type: String,
@@ -28,8 +43,17 @@ const props = defineProps({
     cover: {
         type: String,
         default: ''
+    },
+
+    rate: {
+        type: Number,
+        default: 0
     }
 })
+
+const passRating = (number) => {
+    emits('select-rating', number)
+}
 </script>
 
 <style lang="sass" module>
@@ -61,4 +85,12 @@ const props = defineProps({
 .left
     position: relative
     z-index: 1
+
+.right
+    text-align: right
+    z-index: 1
+    font-weight: 500
+
+.rightStars
+    margin-top: $offset-xxs
 </style>

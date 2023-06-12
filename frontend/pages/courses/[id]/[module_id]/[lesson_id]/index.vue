@@ -7,6 +7,8 @@
                 :title="lessonData.name"
                 :subtitle="lessonData.module.course.name"
                 :cover="lessonData.module.course.cover"
+                :rate="userRate"
+                @select-rating="sendRating"
             />
 
             <div :class="$style.content">
@@ -48,6 +50,7 @@ const notify = useToast()
 const isLoading = ref(true)
 const resultIsLoading = ref(false)
 const lessonData = ref(null)
+const userRate = ref(0)
 
 const avatar = computed(() => userStore.user.avatar)
 
@@ -64,6 +67,9 @@ onBeforeMount(async() => {
             return
         }
 
+        const { data: rate } = await courseStore.getUserRating(route.params.id)
+
+        userRate.value = rate
         lessonData.value = data.lesson
 
         isLoading.value = false
@@ -113,6 +119,17 @@ const sendCode = async(code) => {
         }
     } finally {
         resultIsLoading.value = false
+    }
+}
+
+const sendRating = async(number) => {
+    try {
+        await courseStore.postUserRating(route.params.id, number)
+        userRate.value = number
+    } catch (e) {
+        if (e?.response?.data) {
+            notify.error(e.response.data.error || e.response.data.message)
+        }
     }
 }
 </script>
