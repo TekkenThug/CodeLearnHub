@@ -45,6 +45,10 @@ onMounted(() => {
     })
 })
 
+onBeforeUnmount(() => {
+    editor.value.destroy()
+})
+
 watch(() => props.clear, (value) => {
     if (value) {
         editor.value.clear()
