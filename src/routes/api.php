@@ -41,6 +41,8 @@ Route::prefix('v1')->group(function() {
             Route::get('/my', [CourseController::class, 'myCourses']);
             Route::get('/authored', [CourseController::class, 'authoredCourses']);
             Route::post('/record', [CourseController::class, 'recordToCourse']);
+            Route::get('/my-rating', [CourseController::class, 'getUserRating']);
+            Route::post('/rate', [CourseController::class, 'setUserRating']);
         });
     });
 

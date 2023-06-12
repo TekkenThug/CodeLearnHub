@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Module;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -215,6 +216,55 @@ class CourseController extends Controller
     {
         return response()->json([
             'data' => Course::find($id)
+        ]);
+    }
+
+    /**
+     * Получить рейтинг, проставленный пользователем
+     */
+    public function getUserRating(Request $request)
+    {
+        $courseId = $request->input('id');
+
+        $record = DB::table('course_user')
+                    ->where('user_id', $request->user()->id)
+                    ->where('course_id', $courseId)
+                    ->first();
+
+        if (!$record) {
+            return response()->json([
+                'message' => 'Курс не найден'
+            ], 404);
+        }
+
+        return response()->json([
+            'data' => $record->rate,
+        ]);
+    }
+
+    /**
+     * Выставить пользовательский рейтинг
+     */
+    public function setUserRating(Request $request)
+    {
+        $courseId = $request->input('id');
+
+        $record = $request->user()->courses()->where('course_id', $courseId);
+
+        if (!$record->exists()) {
+            return response()->json([
+                'message' => 'Курс не найден'
+            ], 404);
+        }
+
+        $request->user()->courses()->syncWithoutDetaching([
+            $courseId => [
+                'rate' => $request->input('rate')
+            ]
+        ]);
+
+        return response()->json([
+            'message' => 'Рейтинг успешно выставлен'
         ]);
     }
 }
