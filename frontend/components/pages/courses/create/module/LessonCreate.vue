@@ -21,21 +21,21 @@
         />
 
         <UiEditor
-            placeholder="Содержимое"
+            placeholder="Методическая часть урока"
             :class="$style.field"
             @change="edit => value.content = !edit.length ? '' : JSON.stringify(edit)"
         />
 
-        <UiTextarea
-            v-model="value.test_code"
-            placeholder="Тестовый код. Выполняется на сервере для проверки задания"
+        <CodeEditor
             :class="$style.field"
+            prepared-code="// Тестовый код. Выполняется на сервере для проверки задания"
+            @change="code => value.test_code = code"
         />
 
-        <UiTextarea
-            v-model="value.layout_code"
-            placeholder="Шаблонный код. С ним ученик начинает урок"
+        <CodeEditor
             :class="$style.field"
+            prepared-code="// Шаблонный код. С ним ученик начинает урок"
+            @change="code => value.layout_code = code"
         />
     </div>
 </template>
@@ -43,6 +43,7 @@
 <script setup>
 import Controls from '~/components/pages/courses/create/module/Controls'
 import UiEditor from '~/components/ui/UiEditor'
+import CodeEditor from '~/components/common/code-editor/CodeEditor'
 
 const emit = defineEmits(['delete', 'top', 'bottom', 'update:modelValue'])
 const props = defineProps({
