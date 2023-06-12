@@ -29,7 +29,7 @@ const content = ref(null)
 
 onMounted(() => {
     editorInstance.value = new CodeFlask(content.value, {
-        language: 'js',
+        language: props.language,
         lineNumbers: true,
         enableAutocorrect: true,
         tabSize: 4
