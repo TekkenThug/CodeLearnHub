@@ -20,10 +20,10 @@ class CourseController extends Controller
         return response()->json([
             'data' => [
                 'courses' => Course::where('is_active', true)
-                ->orderBy('students_count', 'desc')
-                ->orderBy('rate', 'desc')
-                ->limit(3)
-                ->get()
+                            ->orderBy('students_count', 'desc')
+                            ->orderBy('rate', 'desc')
+                            ->limit(3)
+                            ->get(),
             ],
         ]);
     }
