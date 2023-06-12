@@ -241,6 +241,16 @@ const saveCourse = async() => {
     &:not(:last-child)
         margin-bottom: $offset-m
 
+.select
+    :global(.multiselect__tags)
+        // padding: 12px 16px
+        border: 1px solid $gray-100
+        border-radius: 10px
+        background-color: $gray-50
+
+    :global(.multiselect__single)
+        background: $gray-50
+
 .moduleItem
     padding: $offset-s
     border: 2px solid $blue-main
