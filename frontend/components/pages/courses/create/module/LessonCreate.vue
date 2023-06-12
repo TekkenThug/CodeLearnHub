@@ -2,7 +2,7 @@
     <div>
         <div :class="$style.top">
             <strong :class="$style.title">
-                {{ parentOrder }}.{{ order }}.
+                {{ caption }}
             </strong>
 
             <div>
@@ -20,10 +20,10 @@
             :class="$style.field"
         />
 
-        <UiTextarea
-            v-model="value.content"
+        <UiEditor
             placeholder="Содержимое"
             :class="$style.field"
+            @change="edit => value.content = !edit.length ? '' : JSON.stringify(edit)"
         />
 
         <UiTextarea
@@ -40,22 +40,29 @@
     </div>
 </template>
 
-<script lang="ts" setup>
-import Controls from '~/components/pages/courses/create/module/Controls.vue'
+<script setup>
+import Controls from '~/components/pages/courses/create/module/Controls'
+import UiEditor from '~/components/ui/UiEditor'
 
-// eslint-disable-next-line func-call-spacing
-const emit = defineEmits<{
-    (e: 'delete'): void,
-    (e: 'top'): void,
-    (e: 'bottom'): void,
-    (e: 'update:modelValue', value: object): void
-}>()
-const props = defineProps<{
-    order: number,
-    parentOrder: number,
-    modelValue: any,
-}>()
+const emit = defineEmits(['delete', 'top', 'bottom', 'update:modelValue'])
+const props = defineProps({
+    order: {
+        type: Number,
+        required: true
+    },
 
+    parentOrder: {
+        type: Number,
+        required: true
+    },
+
+    modelValue: {
+        type: Object,
+        required: true
+    }
+})
+
+const caption = computed(() => `${props.parentOrder}.${props.order}.`)
 const value = computed({
     get() {
         return props.modelValue
