@@ -67,11 +67,42 @@ class CourseController extends Controller
      */
     public function myCourses(Request $request)
     {
+        $courses = User::find($request->user()->id)
+                        ->courses()
+                        ->get();
+
+        foreach ($courses as $course) {
+            $row = DB::table('course_user')
+                        ->where('user_id', $request->user()->id)
+                        ->where('course_id', $course->id)
+                        ->first();
+
+            $currentModuleId = $row->current_module_id;
+            $currentLessonId = $row->current_lesson_id;
+            $isComplete = $row->is_complete;
+
+            $count = 0;
+
+            $modules = Module::where('course_id', $course->id)
+                    ->orderBy('order', 'asc')
+                    ->get();
+
+            foreach ($modules as $module) {
+                if ($module->id === $currentModuleId) {
+                    $lessonOrder = Lesson::find($currentLessonId)->order;
+                    $count += $isComplete ? $lessonOrder : $lessonOrder - 1;
+                    break;
+                }
+
+                $count += count($module->lessons);
+            }
+
+            $course['progress'] = $count / $course->lessons_count;
+        }
+        
         return response()->json([
             'data' => [
-                'courses' => User::find($request->user()->id)
-                ->courses()
-                ->get()
+                'courses' => $courses
             ]
         ]);
     }
