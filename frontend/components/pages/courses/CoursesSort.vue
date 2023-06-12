@@ -24,18 +24,15 @@
     </div>
 </template>
 
-<script lang="ts" setup>
-interface Props {
-    defaultSort: string
-}
-
-const props = withDefaults(defineProps<Props>(), {
-    defaultSort: 'rate'
+<script setup>
+const props = defineProps({
+    defaultSort: {
+        type: String,
+        default: 'rate'
+    }
 })
-interface Events {
-    (e: 'change', sort: { value: string, desc: string }): void,
-}
-const emit = defineEmits<Events>()
+
+const emit = defineEmits(['change'])
 
 const desc = ref('desc')
 const activeSort = ref(props.defaultSort)
@@ -58,7 +55,7 @@ const sortList = ref([
     }
 ])
 
-const changeSort = (value: string) => {
+const changeSort = (value) => {
     if (value !== activeSort.value) {
         desc.value = 'desc'
     } else {
