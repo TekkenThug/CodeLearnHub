@@ -12,7 +12,7 @@
             <div :class="$style.content">
                 <LessonSide
                     :class="$style.side"
-                    :description="lessonData.content"
+                    :description="JSON.parse(lessonData.content)"
                     :comments="lessonData.comments"
                     :avatar="avatar"
                     @send-comment="sendComment"
@@ -21,6 +21,7 @@
                 <LessonEditor
                     :class="$style.editor"
                     :layout-code="lessonData.layout_code"
+                    @send-code="sendCode"
                 />
             </div>
         </div>
@@ -45,6 +46,7 @@ const route = useRoute()
 const notify = useToast()
 
 const isLoading = ref(true)
+const resultIsLoading = ref(false)
 const lessonData = ref(null)
 
 const avatar = computed(() => userStore.user.avatar)
@@ -57,7 +59,12 @@ onBeforeMount(async() => {
             route.params.lesson_id
         )
 
-        lessonData.value = data
+        if (data.redirect) {
+            navigateTo(`/courses/${route.params.id}/${data.redirect.module_order}/${data.redirect.lesson_order}`)
+            return
+        }
+
+        lessonData.value = data.lesson
 
         isLoading.value = false
     } catch (e) {
@@ -76,6 +83,36 @@ const sendComment = async(text) => {
         if (e?.response?.data) {
             notify.error(e.response.data.error || e.response.data.message)
         }
+    }
+}
+
+const sendCode = async(code) => {
+    if (resultIsLoading.value) {
+        return
+    }
+
+    resultIsLoading.value = true
+
+    try {
+        const { data, message } = await courseStore.checkTest(code, lessonData.value.id)
+
+        if (!data.result) {
+            notify.error(message)
+        } else {
+            notify.success(message)
+
+            if (data.is_done) {
+                navigateTo('/courses')
+            } else {
+                navigateTo(`/courses/${route.params.id}/${data.module_order}/${data.lesson_order}`)
+            }
+        }
+    } catch (e) {
+        if (e?.response?.data) {
+            notify.error(e.response.data.error || e.response.data.message)
+        }
+    } finally {
+        resultIsLoading.value = false
     }
 }
 </script>
