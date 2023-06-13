@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
         <transition name="fade" mode="out-in">
             <UiLoader
                 v-if="isLoading"
