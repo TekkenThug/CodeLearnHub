@@ -152,7 +152,9 @@ class AdminController extends Controller
     public function myTickets(Request $request)
     {
         return response()->json([
-            'data' => Ticket::where('admin_id', $request->user()->id)->get()
+            'data' => Ticket::where('admin_id', $request->user()->id)
+                            ->orderBy('resolve', 'asc')
+                            ->get()
         ]);
     }
 
@@ -162,7 +164,9 @@ class AdminController extends Controller
     public function getActiveTickets(Request $request)
     {
         return response()->json([
-            'data' => Ticket::where('resolve', false)->where('admin_id', NULL)->get()
+            'data' => Ticket::where('resolve', false)
+                            ->where('admin_id', NULL)
+                            ->get()
         ]);
     }
 
