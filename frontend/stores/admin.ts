@@ -20,10 +20,30 @@ export const useAdminStore = defineStore('admin', () => {
         return http.post('/api/v1/admin/languages', { language }).then(({ data }) => data)
     }
 
+    const getMyTickets = () => {
+        return http.get('/api/v1/admin/tickets/my').then(({ data }) => data)
+    }
+
+    const getActiveTickets = () => {
+        return http.get('/api/v1/admin/tickets/active').then(({ data }) => data)
+    }
+
+    const takeTicket = (id: number) => {
+        return http.post(`/api/v1/admin/tickets/take/${id}`).then(({ data }) => data)
+    }
+
+    const closeTicket = (id: number) => {
+        return http.post(`/api/v1/admin/tickets/resolve/${id}`).then(({ data }) => data)
+    }
+
     return {
         getUserList,
         postNews,
         getLanguages,
-        postLanguage
+        postLanguage,
+        getMyTickets,
+        getActiveTickets,
+        takeTicket,
+        closeTicket
     }
 })
