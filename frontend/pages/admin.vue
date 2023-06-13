@@ -32,6 +32,10 @@ import AdminLanguagesControl from '~/components/pages/admin/AdminLanguagesContro
 import AdminTicketControl from '~/components/pages/admin/tickets/AdminTicketControl'
 
 const navigation = ref('users')
+
+definePageMeta({
+    middleware: ['auth', 'admin']
+})
 </script>
 
 <style lang="sass" module>
@@ -53,6 +57,7 @@ const navigation = ref('users')
 
 .content
     margin-left: auto
+    overflow: auto
     flex-grow: 1
 
     @include responsive($mobile)
