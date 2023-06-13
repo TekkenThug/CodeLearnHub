@@ -15,6 +15,8 @@
                         <AdminLanguagesControl v-else-if="navigation === 'languages'" />
 
                         <AdminNewsControl v-else-if="navigation === 'news'" />
+
+                        <AdminTicketControl v-else-if="navigation === 'tickets'" />
                     </transition>
                 </div>
             </div>
@@ -27,6 +29,7 @@ import AdminSide from '~/components/pages/admin/AdminSide'
 import AdminUserControl from '~/components/pages/admin/AdminUserControl'
 import AdminNewsControl from '~/components/pages/admin/AdminNewsControl'
 import AdminLanguagesControl from '~/components/pages/admin/AdminLanguagesControl'
+import AdminTicketControl from '~/components/pages/admin/tickets/AdminTicketControl'
 
 const navigation = ref('users')
 </script>
@@ -39,7 +42,8 @@ const navigation = ref('users')
         flex-direction: column
 
 .aside
-    width: 280px
+    width: 240px
+    flex-shrink: 0
     margin-right: $offset-m
 
     @include responsive($mobile)
