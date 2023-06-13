@@ -1,32 +1,36 @@
 <template>
-    <table :class="$style.UiTable">
-        <tr :class="$style.head">
-            <th
-                v-for="item in head"
-                :key="item.id"
-                :class="$style.cell"
-            >
-                {{ item.title }}
-            </th>
-        </tr>
+    <div :class="$style.wrapper">
+        <table :class="$style.UiTable">
+            <tr :class="$style.head">
+                <th
+                    v-for="item in head"
+                    :key="item.id"
+                    :class="$style.cell"
+                >
+                    {{ item.title }}
+                </th>
+            </tr>
 
-        <tr
-            v-for="(row, index) in mappedRows"
-            :key="index"
-            :class="$style.row"
-        >
-            <td
-                v-for="(item, innerIndex) in Object.values(row)"
-                :key="innerIndex"
-                :class="$style.cell"
+            <tr
+                v-for="(row, index) in mappedRows"
+                :key="index"
+                :class="[$style.row, { [$style['_hover']]: hasClickedRow }]"
+                @click="hasClickedRow ? $emit('row-click', row.id) : ''"
             >
-                {{ item }}
-            </td>
-        </tr>
-    </table>
+                <td
+                    v-for="(item, innerIndex) in Object.values(row)"
+                    :key="innerIndex"
+                    :class="$style.cell"
+                >
+                    {{ item }}
+                </td>
+            </tr>
+        </table>
+    </div>
 </template>
 
 <script setup>
+const emits = defineEmits(['row-click'])
 const props = defineProps({
     head: {
         type: Array,
@@ -36,6 +40,11 @@ const props = defineProps({
     rows: {
         type: Array,
         default: () => ([])
+    },
+
+    hasClickedRow: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -55,9 +64,12 @@ const mappedRows = computed(() => {
 </script>
 
 <style lang="sass" module>
-.UiTable
+.wrapper
     width: 100%
     overflow-x: auto
+
+.UiTable
+    width: 100%
     border-collapse: collapse
     box-shadow: 0 20px 30px rgba(48, 175, 255, 0.2)
 
@@ -73,6 +85,13 @@ const mappedRows = computed(() => {
     text-align: left
 
 .row
+    &._hover
+        @include trans
+        cursor: pointer
+
+        @include hover
+            background-color: $gray-100
+
     &:not(:last-child)
         border-bottom: 1px solid $gray-100
 
@@ -80,6 +99,6 @@ const mappedRows = computed(() => {
     padding: $offset-xs $offset-m
     flex-shrink: 0
     flex-grow: 0
-    width: 120px
+    width: 180px
     overflow: auto
 </style>
