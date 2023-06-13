@@ -24,7 +24,7 @@
 defineEmits(['click'])
 
 interface Props {
-  type?: 'primary' | 'danger'
+  type?: 'primary' | 'danger' | 'secondary'
   disabled?: boolean,
   isLoading?: boolean
 }
@@ -38,56 +38,66 @@ const props = withDefaults(defineProps<Props>(), {
 
 <style lang="sass">
 .ui-button
-  @include trans
-  position: relative
-  font-weight: 500
-  border-radius: 7px
-  padding: 12px 24px
-  overflow: hidden
-
-  &:disabled
-    cursor: not-allowed
-
-  &--is-loading
-    pointer-events: none
-
-  &--primary
-    color: $white
-    background-color: $blue-main
-
-    .ui-button__loader
-      .ui-loader
-        border-color: $white
-        border-bottom-color: transparent
-
-    &:hover
-      background-color: $blue-dark-card
+    @include trans
+    position: relative
+    font-weight: 500
+    border-radius: 7px
+    border: 2px solid transparent
+    padding: 12px 24px
+    overflow: hidden
 
     &:disabled
-      background-color: $second-primary-200
+        cursor: not-allowed
 
-  &--danger
-    color: $white
-    background-color: $error-500
+    &--is-loading
+        pointer-events: none
 
-    @include hover
-      background-color: darken($error-500, 10%)
+    &--primary
+        color: $white
+        background-color: $blue-main
 
-  &__loader
-    display: flex
-    justify-content: center
-    align-items: center
-    position: absolute
-    top: 0
-    left: 0
-    z-index: 1
-    width: 100%
-    height: 100%
-    background-color: inherit
-    pointer-events: none
+        .ui-button__loader
+          .ui-loader
+            border-color: $white
+            border-bottom-color: transparent
 
-    .ui-loader
-      width: 24px
-      height: 24px
-      border-width: 2px
+        &:hover
+          background-color: $blue-dark-card
+
+        &:disabled
+          background-color: $second-primary-200
+
+    &--secondary
+        background-color: transparent
+        color: $blue-main
+        border: 2px solid $blue-main
+
+        @include hover
+            background-color: $blue-main
+            color: #fff
+
+    &--danger
+        color: $white
+        background-color: $error-500
+
+        @include hover
+            background-color: darken($error-500, 10%)
+
+    &__loader
+        display: flex
+        justify-content: center
+        align-items: center
+        position: absolute
+        top: 0
+        left: 0
+        z-index: 1
+        width: 100%
+        height: 100%
+        background-color: inherit
+        pointer-events: none
+
+        .ui-loader
+          width: 24px
+          height: 24px
+          border-width: 2px
 </style>
