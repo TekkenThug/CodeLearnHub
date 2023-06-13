@@ -93,6 +93,8 @@ Route::prefix('v1')->group(function() {
                 });
 
                 Route::prefix('tickets')->group(function() {
+                    Route::get('/my', [AdminController::class, 'myTickets']);
+                    Route::get('/active', [AdminController::class, 'getActiveTickets']);
                     Route::post('/resolve/{id}', [AdminController::class, 'checkResolve']);
                     Route::post('/take/{id}', [AdminController::class, 'takeTicket']);
                 });

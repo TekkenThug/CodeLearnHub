@@ -147,6 +147,26 @@ class AdminController extends Controller
     }
 
     /**
+     * Получение тикетов администратора
+     */
+    public function myTickets(Request $request)
+    {
+        return response()->json([
+            'data' => Ticket::where('admin_id', $request->user()->id)->get()
+        ]);
+    }
+
+     /**
+     * Получение всех активных тикетов
+     */
+    public function getActiveTickets(Request $request)
+    {
+        return response()->json([
+            'data' => Ticket::where('resolve', false)->where('admin_id', NULL)->get()
+        ]);
+    }
+
+    /**
      * Взятие тикета
      */
     public function takeTicket(Request $request, $id)
