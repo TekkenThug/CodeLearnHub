@@ -129,7 +129,7 @@ class LessonController extends Controller
             $lessonOrder = $nextLesson->first()->order;
             $moduleOrder = $module->order;
 
-            $existedRecord->sync([
+            $existedRecord->syncWithoutDetaching([
                 $course->id => [
                     'current_module_id' => $module->id,
                     'current_lesson_id' => $nextLesson->first()->id
@@ -155,7 +155,7 @@ class LessonController extends Controller
             ->where('order', 1)
             ->first();
 
-            $existedRecord->sync([
+            $existedRecord->syncWithoutDetaching([
                 $course->id => [
                     'current_module_id' => $nextModule->first()->id,
                     'current_lesson_id' => $lesson->id
@@ -172,7 +172,7 @@ class LessonController extends Controller
             ]);
         }
 
-        $existedRecord->sync([
+        $existedRecord->syncWithoutDetaching([
             $course->id => [
                 'is_complete' => true,
             ]

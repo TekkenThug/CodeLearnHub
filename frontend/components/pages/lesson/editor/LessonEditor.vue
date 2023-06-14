@@ -11,6 +11,7 @@
 
         <UiButton
             :class="$style.button"
+            @click="sendCode"
         >
             Отправить на тестирование
         </UiButton>
@@ -20,8 +21,9 @@
 <script setup>
 import CodeFlask from 'codeflask'
 import { languages } from 'prismjs'
-import UiButton from '~/components/ui/buttons/UiButton.vue'
+import UiButton from '~/components/ui/buttons/UiButton'
 
+const emits = defineEmits(['sendCode'])
 const props = defineProps({
     layoutCode: {
         type: String,
@@ -39,7 +41,15 @@ onMounted(() => {
     })
 
     editorInstance.value.addLanguage('java', languages.java)
+
+    editorInstance.value.onUpdate((code) => {
+        content.value = code
+    })
 })
+
+const sendCode = () => {
+    emits('sendCode', content.value)
+}
 </script>
 
 <style lang="sass" module>
