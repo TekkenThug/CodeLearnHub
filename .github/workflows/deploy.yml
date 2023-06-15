@@ -18,7 +18,9 @@ jobs:
           extension: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
 
       - name: Install Composer dependencied
-        run: composer install --no-dev --no-interaction --prefer-dist
+        run: |
+          cd src/
+          composer install --no-dev --no-interaction --prefer-dist
 
       # - name: Set ssh key
       #   run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
