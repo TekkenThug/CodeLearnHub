@@ -22,6 +22,9 @@ jobs:
           cd src/
           composer install --no-interaction --prefer-dist
 
+      - name: Create deployment artifact
+        run: tar -czf app.tar.gz --exclude=*.git --exclude=node_modules src/*
+
       # - name: Set ssh key
       #   run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
 
