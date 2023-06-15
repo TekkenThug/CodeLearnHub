@@ -11,25 +11,39 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set ssh key
-        run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Configure PHP 8.0
+        uses: shivammathur/setup-php@master
         with:
-          node-version: 16
+          php-version: 8.2.7
+          extension: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
 
-      - name: Install dependencies
-        run: cd frontend/ && npm install
+      - name: Install Composer dependencied
+        run: composer install --no-dev --no-interaction --prefer-dist
 
-      - name: Install nuxi
-        run: npm i @nuxt/kit
+      # - name: Set ssh key
+      #   run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
 
-      - name: Generate project
-        run: cd frontend/ && npx nuxi generate
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: 16
 
-      - name: Install sshpass
-        run: sudo apt-get install sshpass
+      # - name: Install dependencies
+      #   run: cd frontend/ && npm install
+
+      # - name: Install nuxi
+      #   run: npm i @nuxt/kit
+
+      # - name: Generate project
+      #   run: cd frontend/ && npx nuxi generate
+
+      # - name: Install sshpass
+      #   run: sudo apt-get install sshpass
+
+      # - name: Deploy Laravel app
+      #   run: |
+      #     cd src/
+      #     rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --exclude='vendor/' --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
       
-      - name: Deploy to remote server
-        run: cd frontend/.output/public && rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
+      # - name: Deploy frontend
+      #   run: cd frontend/.output/public && rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
