@@ -25,6 +25,9 @@ jobs:
       - name: Create deployment artifact
         run: tar -czf app.tar.gz --exclude=*.git --exclude=node_modules src/*
 
+      - name: Pass artifact to the server
+        run: rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete app.tar.gz root@${{ secrets.SERVER_IP }}:/var/www/html 
+
       # - name: Set ssh key
       #   run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
 
