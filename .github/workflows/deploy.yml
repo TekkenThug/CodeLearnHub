@@ -10,11 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # Setup key
-      - run: set -eu
-      - run: mkdir "$HOME/.ssh"
-      - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
-      - run: chmod 600 "$HOME/.ssh/key"
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -29,6 +24,9 @@ jobs:
 
       - name: Generate project
         run: cd frontend/ && npx nuxi generate
+
+      - name: Set password for ssh
+        run: apt-get install sshpass && sshpass -p`cat .password` ssh ${{ secrets.ROOT_PASSWORD }}
       
       - name: Deploy to remote server
         uses: easingthemes/ssh-deploy@v2.1.5
