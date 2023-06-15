@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  create-deployment-artifact:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -24,6 +24,23 @@ jobs:
 
       - name: Create deployment artifact
         run: tar -czf app.tar.gz --exclude=*.git --exclude=node_modules src/*
+
+      - name: Store deployment artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-build
+          path: app.tar.gz
+  
+  prepare-release-on-server:
+    runs-on: ubuntu-latest
+    needs: create-deployment-artifact
+    strategy:
+      matrix:
+        server: ${{ secrets.SERVER_IP }}
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: app-build
 
       # - name: Set ssh key
       #   run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
