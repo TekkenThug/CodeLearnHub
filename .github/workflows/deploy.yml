@@ -15,7 +15,17 @@ jobs:
       - run: mkdir "$HOME/.ssh"
       - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
       - run: chmod 600 "$HOME/.ssh/key"
-      # Deploy
-      - run: cd frontend/
-      - run: npx nuxi generate
-      - run: cd .output/public && rsync -e "ssh -p 20022 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@217.25.88.146:/var/www/html/
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: cd frontend/ && npm install
+
+      - name: Generate project
+        run: npx nuxi generate
+      
+      - name: Pass to the server
+        run: cd .output/public && rsync -e "ssh -p 20022 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@217.25.88.146:/var/www/html/
