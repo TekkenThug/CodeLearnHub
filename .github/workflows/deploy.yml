@@ -32,7 +32,7 @@ jobs:
       
       - name: Deploy to remote server
         uses: easingthemes/ssh-deploy@v2.1.5
-        with:
+        env:
           REMOTE_HOST: 217.25.88.146
           SSH_PRIVATE_KEY: ${{ secrets.KEY }}
           REMOTE_USER: root
