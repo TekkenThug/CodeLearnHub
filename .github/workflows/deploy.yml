@@ -28,7 +28,7 @@ jobs:
         run: npm i @nuxt/kit
 
       - name: Generate project
-        run: npx nuxi generate
+        run: cd frontend/ && npx nuxi generate
       
       - name: Pass to the server
         run: cd .output/public && rsync -e "ssh -p 20022 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@217.25.88.146:/var/www/html/
