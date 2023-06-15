@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: cd frontend/ && npm install
 
+      - name: Install nuxi
+        run: npm i @nuxt/kit
+
       - name: Generate project
         run: npx nuxi generate
       
