@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
   animation: rotation 1s linear infinite
 
   &--primary
-    border-color: $blue-main
+    border-color: red
     border-bottom-color: transparent
 
   &--secondary
