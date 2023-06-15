@@ -31,7 +31,10 @@ jobs:
           tar -czf app.tar.gz --exclude=*.git --exclude=node_modules *
 
       - name: Pass artifact to the server
-        run: rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete app.tar.gz root@${{ secrets.SERVER_IP }}:/var/www/html
+        run:
+          |
+          cd src/
+          rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete app.tar.gz root@${{ secrets.SERVER_IP }}:/var/www/html
 
       # - name: Set up Node.js
       #   uses: actions/setup-node@v2
