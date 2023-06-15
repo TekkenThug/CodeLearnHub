@@ -33,7 +33,8 @@ jobs:
       - name: Deploy to remote server
         uses: easingthemes/ssh-deploy@v2.1.5
         with:
-          ssh-private-key: ${{ secrets.KEY }}
-          ssh-username: root
-          remote-absolute-path: /var/www/html
-          local-relative-path: frontend/.output/public
+          REMOTE_HOST: 217.25.88.146
+          SSH_PRIVATE_KEY: ${{ secrets.KEY }}
+          REMOTE_USER: root
+          TARGET: /var/www/html
+          SOURCE: frontend/.output/public
