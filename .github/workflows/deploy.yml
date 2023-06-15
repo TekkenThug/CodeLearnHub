@@ -11,6 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: bebra
+        run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
+
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -25,14 +28,11 @@ jobs:
       - name: Generate project
         run: cd frontend/ && npx nuxi generate
 
-      - name: Set password for ssh
-        run: sudo apt-get install sshpass && sshpass -p ${{ secrets.ROOT_PASSWORD }}
+      - name: Install sshpass
+        run: sudo apt-get install sshpass
       
       - name: Deploy to remote server
-        uses: easingthemes/ssh-deploy@v2.1.5
         env:
-          REMOTE_HOST: ${{ secrets.SERVER_IP }}
+          REMOTE_HOST: ${{ secrets.SERVER_IP }} 
           SSH_PRIVATE_KEY: ${{ secrets.KEY }}
-          REMOTE_USER: root
-          TARGET: /var/www/html
-          SOURCE: frontend/.output/public
+        run: cd frontend/.output/public && rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ REMOTE_HOST }}:/var/www/html
