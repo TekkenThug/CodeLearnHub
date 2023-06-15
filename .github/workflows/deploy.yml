@@ -32,7 +32,4 @@ jobs:
         run: sudo apt-get install sshpass
       
       - name: Deploy to remote server
-        env:
-          REMOTE_HOST: ${{ secrets.SERVER_IP }} 
-          SSH_PRIVATE_KEY: ${{ secrets.KEY }}
-        run: cd frontend/.output/public && rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ REMOTE_HOST }}:/var/www/html
+        run: cd frontend/.output/public && rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
