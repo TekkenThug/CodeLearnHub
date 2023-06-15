@@ -26,7 +26,7 @@ jobs:
         run: cd frontend/ && npx nuxi generate
 
       - name: Set password for ssh
-        run: apt-get install sshpass && sshpass -p`cat .password` ssh ${{ secrets.ROOT_PASSWORD }}
+        run: sudo apt-get install sshpass && sshpass -p`cat .password` ssh ${{ secrets.ROOT_PASSWORD }}
       
       - name: Deploy to remote server
         uses: easingthemes/ssh-deploy@v2.1.5
