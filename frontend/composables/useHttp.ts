@@ -3,7 +3,7 @@ import axios from 'axios'
 /**
  * TODO: Replace this on env
  */
-const baseURL = 'http://217.25.88.146/'
+const baseURL = 'http://localhost:8000'
 
 const httpInstance = axios.create({
     baseURL,
