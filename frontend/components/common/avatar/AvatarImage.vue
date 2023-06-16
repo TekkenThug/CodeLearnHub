@@ -31,6 +31,8 @@ const props = defineProps({
 <style lang="sass" module>
 .avatar
     display: block
+    object-fit: cover
+    object-position: center
 
     &._rounded
         border-radius: 50%
