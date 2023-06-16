@@ -1,62 +1,62 @@
-name: Deploy
+# name: Deploy
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
 
-      - name: Set ssh key
-        run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
+#       - name: Set ssh key
+#         run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
 
-      - name: Configure PHP 8.0
-        uses: shivammathur/setup-php@master
-        with:
-          php-version: 8.2.7
-          extension: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
+#       - name: Configure PHP 8.0
+#         uses: shivammathur/setup-php@master
+#         with:
+#           php-version: 8.2.7
+#           extension: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
 
-      - name: Install Composer dependencied
-        run: |
-          cd src/
-          composer install --no-interaction --prefer-dist
+#       - name: Install Composer dependencied
+#         run: |
+#           cd src/
+#           composer install --no-interaction --prefer-dist
 
-      - name: Create deployment artifact
-        run: |
-          cd src/
-          tar -czf app.tar.gz --exclude=*.git --exclude=node_modules *
+#       - name: Create deployment artifact
+#         run: |
+#           cd src/
+#           tar -czf app.tar.gz --exclude=*.git --exclude=node_modules *
 
-      - name: Pass artifact to the server
-        run:
-          |
-          cd src/
-          rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete app.tar.gz root@${{ secrets.SERVER_IP }}:/var/www/html
+#       - name: Pass artifact to the server
+#         run:
+#           |
+#           cd src/
+#           rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete app.tar.gz root@${{ secrets.SERVER_IP }}:/var/www/html
 
-      # - name: Set up Node.js
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: 16
+#       # - name: Set up Node.js
+#       #   uses: actions/setup-node@v2
+#       #   with:
+#       #     node-version: 16
 
-      # - name: Install dependencies
-      #   run: cd frontend/ && npm install
+#       # - name: Install dependencies
+#       #   run: cd frontend/ && npm install
 
-      # - name: Install nuxi
-      #   run: npm i @nuxt/kit
+#       # - name: Install nuxi
+#       #   run: npm i @nuxt/kit
 
-      # - name: Generate project
-      #   run: cd frontend/ && npx nuxi generate
+#       # - name: Generate project
+#       #   run: cd frontend/ && npx nuxi generate
 
-      # - name: Install sshpass
-      #   run: sudo apt-get install sshpass
+#       # - name: Install sshpass
+#       #   run: sudo apt-get install sshpass
 
-      # - name: Deploy Laravel app
-      #   run: |
-      #     cd src/
-      #     rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --exclude='vendor/' --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
+#       # - name: Deploy Laravel app
+#       #   run: |
+#       #     cd src/
+#       #     rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --exclude='vendor/' --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
       
-      # - name: Deploy frontend
-      #   run: cd frontend/.output/public && rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
+#       # - name: Deploy frontend
+#       #   run: cd frontend/.output/public && rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html

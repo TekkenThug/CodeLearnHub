@@ -1,0 +1,2 @@
+inputs:
+  token: ${{ secrets.GITHUB_TOKEN }}
