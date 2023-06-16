@@ -1,62 +1,97 @@
-# name: Deploy
+name: Deploy frontend
 
-# on:
-#   push:
-#     branches:
-#       - main
+on: [push]
 
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
+jobs:
+  backed:
+  runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: ./src
 
-#       - name: Set ssh key
-#         run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
+    steps:
+      - uses: actions/checkout@v2
 
-#       - name: Configure PHP 8.0
-#         uses: shivammathur/setup-php@master
-#         with:
-#           php-version: 8.2.7
-#           extension: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
+      - name: Set SSH key
+        run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
 
-#       - name: Install Composer dependencied
-#         run: |
-#           cd src/
-#           composer install --no-interaction --prefer-dist
+      - name: Configure PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: 8.2.7
+          extension: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
 
-#       - name: Create deployment artifact
-#         run: |
-#           cd src/
-#           tar -czf app.tar.gz --exclude=*.git --exclude=node_modules *
+      - name: Install Composer dependencied
+        run: composer install --no-interaction --prefer-dist
 
-#       - name: Pass artifact to the server
-#         run:
-#           |
-#           cd src/
-#           rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete app.tar.gz root@${{ secrets.SERVER_IP }}:/var/www/html
+      - name: Create deployment artifact
+        run: tar -czf app.tar.gz --exclude=*.git --exclude=node_modules *
 
-#       # - name: Set up Node.js
-#       #   uses: actions/setup-node@v2
-#       #   with:
-#       #     node-version: 16
+      - name: Pass artifact to the server
+        run: rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete app.tar.gz root@${{ secrets.SERVER_IP }}:~/
 
-#       # - name: Install dependencies
-#       #   run: cd frontend/ && npm install
+  frontend:
+    runs-on: ubuntu-latest
 
-#       # - name: Install nuxi
-#       #   run: npm i @nuxt/kit
+    defaults:
+      run:
+        working-directory: ./frontend
 
-#       # - name: Generate project
-#       #   run: cd frontend/ && npx nuxi generate
+    # permissions:
+    #   pages: write
+    #   id-token: write
 
-#       # - name: Install sshpass
-#       #   run: sudo apt-get install sshpass
+    # environment:
+    #   name: github-pages
+    #   url: ${{ steps.deployment.outputs.page_url }}
 
-#       # - name: Deploy Laravel app
-#       #   run: |
-#       #     cd src/
-#       #     rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --exclude='vendor/' --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
-      
-#       # - name: Deploy frontend
-#       #   run: cd frontend/.output/public && rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set SSH key
+        run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install nuxi
+        run: npm i @nuxt/kit
+
+      - name: Generate project files
+        run: npx nuxi generate
+
+      - name: Deploy frontend via SSH
+        run: |
+          cd .output/public
+          rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
+
+      # - name: Create deployment artifact
+      #   run: |
+      #     chmod -c -R +rX ".output/public/" | while read line; do
+      #       echo "::warning title=Invalid file permissions automatically fixed::$line"
+      #     done
+      #     tar \
+      #     --dereference --hard-dereference \
+      #     --directory ".output/public/" \
+      #     -cvf ".output/public/artifact.tar" \
+      #     --exclude=.git \
+      #     --exclude=.github \
+      #     .
+
+      # - name: Upload artifact
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: github-pages
+      #     path: frontend/.output/public/artifact.tar
+      #     retention-days: '1'
+      #     if-no-files-found: error
+
+      # - name: Deploy to GitHub Pages
+      #   id: deployment
+      #   uses: actions/deploy-pages@v2
