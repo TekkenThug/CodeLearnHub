@@ -53,7 +53,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: github-pages
-          path: .output/public/artifact.tar
+          path: frontend/.output/public/artifact.tar
           retention-days: '1'
           if-no-files-found: error
 
