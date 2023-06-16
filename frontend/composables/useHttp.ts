@@ -3,7 +3,7 @@ import axios from 'axios'
 /**
  * TODO: Replace this on env
  */
-const baseURL = 'http://codelearnhub.ru/'
+const baseURL = 'https://codelearnhub.ru/'
 
 const httpInstance = axios.create({
     baseURL,
