@@ -1,16 +1,18 @@
-name: Deploy frontend
+name: Deploy
 
 on: [push]
 
 jobs:
   backed:
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
+
     defaults:
-        run:
-          working-directory: ./src
+      run:
+        working-directory: ./src
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Set SSH key
         run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
