@@ -3,34 +3,34 @@ name: Deploy
 on: [push]
 
 jobs:
-  backend:
-    runs-on: ubuntu-latest
+  # backend:
+  #   runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./src
+  #   defaults:
+  #     run:
+  #       working-directory: ./src
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - name: Set SSH key
-        run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
+  #     - name: Set SSH key
+  #       run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
 
-      - name: Configure PHP
-        uses: shivammathur/setup-php@master
-        with:
-          php-version: 8.2.7
-          extension: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
+  #     - name: Configure PHP
+  #       uses: shivammathur/setup-php@master
+  #       with:
+  #         php-version: 8.2.7
+  #         extension: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
 
-      - name: Install Composer dependencied
-        run: composer install --no-interaction --prefer-dist
+  #     - name: Install Composer dependencied
+  #       run: composer install --no-interaction --prefer-dist
 
-      - name: Create deployment artifact
-        run: tar -czf app.tar.gz --exclude=*.git --exclude=node_modules *
+  #     - name: Create deployment artifact
+  #       run: tar -czf app.tar.gz --exclude=*.git --exclude=node_modules *
 
-      - name: Pass artifact to the server
-        run: rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete app.tar.gz root@${{ secrets.SERVER_IP }}:~/
+  #     - name: Pass artifact to the server
+  #       run: rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete app.tar.gz root@${{ secrets.SERVER_IP }}:~/
 
   frontend:
     runs-on: ubuntu-latest
