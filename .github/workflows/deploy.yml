@@ -41,8 +41,11 @@ jobs:
           key: ${{ secrets.KEY }}
           envs: GITHUB_SHA,RELEASE_PATH,ACTIVE_RELEASE_PATH,STORAGE_PATH,BASE_PATH
           script: |
+            sudo systemctl stop laravel-app
             cd ~/
-            touch test.txt
+            rm -r ./laravel/*
+            tar -xf app.tar.gz -C ./laravel
+            rm app.tar.gz
 
   # frontend:
   #   runs-on: ubuntu-latest
