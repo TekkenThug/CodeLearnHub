@@ -34,18 +34,21 @@ jobs:
 
       - name: Run bash script
         uses: appleboy/ssh-action@master
+        env:
+          LARAVEL_ENV: ${{ secrets.LARAVEL_ENV }}
         with:
           host: ${{ secrets.SERVER_IP }}
           username: root
           password: ${{ secrets.ROOT_PASSWORD }}
           key: ${{ secrets.KEY }}
-          envs: GITHUB_SHA,RELEASE_PATH,ACTIVE_RELEASE_PATH,STORAGE_PATH,BASE_PATH
+          envs: LARAVEL_ENV
           script: |
             sudo systemctl stop laravel-app
             cd ~/
             rm -r ./laravel/*
             tar -xf app.tar.gz -C ./laravel
             rm app.tar.gz
+            echo "${LARAVEL_ENV}" > ./laravel/.env
 
   # frontend:
   #   runs-on: ubuntu-latest
