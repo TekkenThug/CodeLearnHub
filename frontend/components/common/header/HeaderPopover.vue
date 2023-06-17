@@ -87,7 +87,10 @@ import { useUserStore } from '~/stores/user'
 import AvatarImage from '~/components/common/avatar/AvatarImage'
 
 const store = useUserStore()
-const logout = async() => await store.logout()
+const logout = async() => {
+    await store.logout()
+    navigateTo('/')
+}
 const isAuth = computed(() => store.isAuth)
 const isAdmin = computed(() => store.isAdmin())
 const avatar = computed(() => store?.user?.avatar)
