@@ -11,6 +11,7 @@
 import EditorJS from '@editorjs/editorjs'
 import Header from '@editorjs/header'
 import List from '@editorjs/list'
+import CodeTool from '@editorjs/code'
 
 const emits = defineEmits(['change', 'clear'])
 const props = defineProps({
@@ -33,7 +34,8 @@ onMounted(() => {
 
         tools: {
             header: Header,
-            list: List
+            list: List,
+            code: CodeTool
         },
 
         placeholder: props.placeholder,
