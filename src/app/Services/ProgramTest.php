@@ -30,10 +30,10 @@ class ProgramTest
 		$command = 'jest' . ' ' . storage_path('app/' . $fileWithTest) . ' ' . '--config='. storage_path('app/' . $testConfig);
 
 		$process = Process::fromShellCommandline($command);
-        $process->run();
+    $process->run();
 
 		$output = $process->getOutput();
-        $error = $process->getErrorOutput();
+    $error = $process->getErrorOutput();
 
 		Storage::disk('local')->delete($fileWithTest);
 		Storage::disk('local')->delete($testConfig);
