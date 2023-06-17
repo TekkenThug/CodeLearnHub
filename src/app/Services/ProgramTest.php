@@ -35,8 +35,8 @@ class ProgramTest
 		$output = $process->getOutput();
     $error = $process->getErrorOutput();
 
-		Storage::disk('local')->delete($fileWithTest);
-		Storage::disk('local')->delete($testConfig);
+		// Storage::disk('local')->delete($fileWithTest);
+		// Storage::disk('local')->delete($testConfig);
 
 		return strpos($error, 'PASS') === 0;
 	}
