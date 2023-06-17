@@ -3,41 +3,12 @@ name: Deploy
 on: [push]
 
 jobs:
-  # backend:
-  #   runs-on: ubuntu-latest
-
-  #   defaults:
-  #     run:
-  #       working-directory: ./src
-
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-
-  #     - name: Set SSH key
-  #       run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
-
-  #     - name: Configure PHP
-  #       uses: shivammathur/setup-php@master
-  #       with:
-  #         php-version: 8.2.7
-  #         extension: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
-
-  #     - name: Install Composer dependencied
-  #       run: composer install --no-interaction --prefer-dist
-
-  #     - name: Create deployment artifact
-  #       run: tar -czf app.tar.gz --exclude=*.git --exclude=node_modules *
-
-  #     - name: Pass artifact to the server
-  #       run: rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete app.tar.gz root@${{ secrets.SERVER_IP }}:~/
-
-  frontend:
+  backend:
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: ./frontend
+        working-directory: ./src
 
     steps:
       - name: Checkout
@@ -46,21 +17,62 @@ jobs:
       - name: Set SSH key
         run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Configure PHP
+        uses: shivammathur/setup-php@master
         with:
-          node-version: '16'
+          php-version: 8.2.7
+          extension: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install Composer dependencied
+        run: composer install --no-interaction --prefer-dist
 
-      - name: Install nuxi
-        run: npm i @nuxt/kit
+      - name: Create deployment artifact
+        run: tar -czf app.tar.gz --exclude=*.git --exclude=node_modules *
 
-      - name: Generate project files
-        run: npx nuxi generate
+      - name: Pass artifact to the server
+        run: rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete app.tar.gz root@${{ secrets.SERVER_IP }}:~/
 
-      - name: Deploy frontend via SSH
-        run: |
-          cd .output/public
-          rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
+      - name: Run bash script
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          password: ${{ secrets.ROOT_PASSWORD }}
+          key: ${{ secrets.KEY }}
+          envs: GITHUB_SHA,RELEASE_PATH,ACTIVE_RELEASE_PATH,STORAGE_PATH,BASE_PATH
+          script: |
+            cd ~/
+            touch test.txt
+
+  # frontend:
+  #   runs-on: ubuntu-latest
+
+  #   defaults:
+  #     run:
+  #       working-directory: ./frontend
+
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+
+  #     - name: Set SSH key
+  #       run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
+
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '16'
+
+  #     - name: Install dependencies
+  #       run: npm install
+
+  #     - name: Install nuxi
+  #       run: npm i @nuxt/kit
+
+  #     - name: Generate project files
+  #       run: npx nuxi generate
+
+  #     - name: Deploy frontend via SSH
+  #       run: |
+  #         cd .output/public
+  #         rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
