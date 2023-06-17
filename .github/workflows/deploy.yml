@@ -14,14 +14,17 @@ jobs:
       frontend: ${{ steps.filter.outputs.frontend }}
 
     steps:
-    - uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: |
-          backend:
-            - 'src/**'
-          frontend:
-            - 'frontend/**'
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'src/**'
+            frontend:
+              - 'frontend/**'
 
   backend:
     needs: changes
