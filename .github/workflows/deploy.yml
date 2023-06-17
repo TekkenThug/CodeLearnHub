@@ -39,14 +39,6 @@ jobs:
       run:
         working-directory: ./frontend
 
-    # permissions:
-    #   pages: write
-    #   id-token: write
-
-    # environment:
-    #   name: github-pages
-    #   url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -72,28 +64,3 @@ jobs:
         run: |
           cd .output/public
           rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
-
-      # - name: Create deployment artifact
-      #   run: |
-      #     chmod -c -R +rX ".output/public/" | while read line; do
-      #       echo "::warning title=Invalid file permissions automatically fixed::$line"
-      #     done
-      #     tar \
-      #     --dereference --hard-dereference \
-      #     --directory ".output/public/" \
-      #     -cvf ".output/public/artifact.tar" \
-      #     --exclude=.git \
-      #     --exclude=.github \
-      #     .
-
-      # - name: Upload artifact
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: github-pages
-      #     path: frontend/.output/public/artifact.tar
-      #     retention-days: '1'
-      #     if-no-files-found: error
-
-      # - name: Deploy to GitHub Pages
-      #   id: deployment
-      #   uses: actions/deploy-pages@v2
