@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-const version = ref('0.1.0')
+const version = ref('0.2.0')
 </script>
 
 <style module lang="sass">
