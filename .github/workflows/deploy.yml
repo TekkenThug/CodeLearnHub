@@ -51,35 +51,35 @@ jobs:
             echo "${LARAVEL_ENV}" > ./laravel/.env
             sudo systemctl start laravel-app
 
-  # frontend:
-  #   runs-on: ubuntu-latest
+  frontend:
+    runs-on: ubuntu-latest
 
-  #   defaults:
-  #     run:
-  #       working-directory: ./frontend
+    defaults:
+      run:
+        working-directory: ./frontend
 
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-  #     - name: Set SSH key
-  #       run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
+      - name: Set SSH key
+        run: set -eu && mkdir "$HOME/.ssh" && echo "${{ secrets.key }}" > "$HOME/.ssh/key" && chmod 600 "$HOME/.ssh/key"
 
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '16'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
 
-  #     - name: Install dependencies
-  #       run: npm install
+      - name: Install dependencies
+        run: npm install
 
-  #     - name: Install nuxi
-  #       run: npm i @nuxt/kit
+      - name: Install nuxi
+        run: npm i @nuxt/kit
 
-  #     - name: Generate project files
-  #       run: npx nuxi generate
+      - name: Generate project files
+        run: npx nuxi generate
 
-  #     - name: Deploy frontend via SSH
-  #       run: |
-  #         cd .output/public
-  #         rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
+      - name: Deploy frontend via SSH
+        run: |
+          cd .output/public
+          rsync -e "sshpass -p ${{ secrets.ROOT_PASSWORD }} ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ secrets.SERVER_IP }}:/var/www/html
