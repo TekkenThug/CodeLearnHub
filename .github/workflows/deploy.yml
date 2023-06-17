@@ -3,7 +3,30 @@ name: Deploy
 on: [push]
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: read
+
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+
+    steps:
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          backend:
+            - 'src/**'
+          frontend:
+            - 'frontend/**'
+
   backend:
+    needs: changes
+    if: ${{ needs.changes.outputs.backend == 'true' }}
+
     runs-on: ubuntu-latest
 
     defaults:
@@ -52,6 +75,9 @@ jobs:
             sudo systemctl start laravel-app
 
   frontend:
+    needs: changes
+    if: ${{ needs.changes.outputs.frontend == 'true' }}
+
     runs-on: ubuntu-latest
 
     defaults:
