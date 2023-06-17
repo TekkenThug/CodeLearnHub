@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('lesson_id');
             $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
             $table->text('content');
-            $table->timestamp('added_at', $precision = 0);
+            $table->timestamp('added_at', $precision = 0)->useCurrent();
         });
     }
 
