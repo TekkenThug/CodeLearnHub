@@ -49,6 +49,7 @@ jobs:
             tar -xf app.tar.gz -C ./laravel
             rm app.tar.gz
             echo "${LARAVEL_ENV}" > ./laravel/.env
+            sudo systemctl start laravel-app
 
   # frontend:
   #   runs-on: ubuntu-latest

@@ -10,6 +10,7 @@ class NewsController extends Controller
     public function get(Request $request)
     {
         return response()->json([
+            'message' => 'Action is works',
             'data' => [
                 'news' => News::orderBy('added_at', 'desc')->get()
             ]
