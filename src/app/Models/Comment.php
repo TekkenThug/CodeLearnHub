@@ -17,7 +17,6 @@ class Comment extends Model
         'user_id',
         'lesson_id',
         'content',
-        'added_at'
     ];
 
     public function lesson()
