@@ -88,7 +88,7 @@ const progressOnCourse = computed(() => {
         return ''
     }
 
-    return props.progressCount * 100
+    return Math.round(props.progressCount * 100)
 })
 </script>
 
