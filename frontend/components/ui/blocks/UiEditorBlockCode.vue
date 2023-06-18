@@ -16,7 +16,7 @@ const props = defineProps({
 
 <style lang="sass" module>
 .UiEditorBlockCode
-    width: 100%
+    display: block
     padding: $offset-xs $offset-s
     background-color: $gray-50
     color: #000000
