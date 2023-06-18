@@ -26,7 +26,7 @@ class ProgramTest
 			"verbose": true
 		  }');
 
-		$command = 'jest' . ' ' . storage_path('app/' . $fileWithTest) . ' ' . '--config='. storage_path('app/' . $testConfig);
+		$command = 'jest' . ' ' . storage_path('app/' . $fileWithTest) . ' ' . '--config=' . storage_path('app/' . $testConfig);
 
 		$process = Process::fromShellCommandline($command);
     $process->run();
@@ -34,10 +34,11 @@ class ProgramTest
 		$output = $process->getOutput();
     $error = $process->getErrorOutput();
 
+		dd($command);
 		dd($error);
 
-		Storage::disk('local')->delete($fileWithTest);
-		Storage::disk('local')->delete($testConfig);
+		// Storage::disk('local')->delete($fileWithTest);
+		// Storage::disk('local')->delete($testConfig);
 
 		return strpos($error, 'PASS') === 0;
 	}
