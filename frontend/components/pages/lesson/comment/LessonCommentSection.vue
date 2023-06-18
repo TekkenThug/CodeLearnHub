@@ -14,7 +14,7 @@
                 >
 
                 <img
-                    v-else="avatar"
+                    v-else
                     :class="$style.formImage"
                     src="~/assets/images/common/default-avatar.png"
                     alt="Avatar"
