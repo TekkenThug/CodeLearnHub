@@ -34,7 +34,7 @@ class ProgramTest
 		$output = $process->getOutput();
     $error = $process->getErrorOutput();
 
-		$processTwo = Process::fromShellCommandline('nvm');
+		$processTwo = Process::fromShellCommandline('ls');
 		$processTwo->run();
 
 		dd($processTwo->getErrorOutput(), $processTwo->getOutput());
