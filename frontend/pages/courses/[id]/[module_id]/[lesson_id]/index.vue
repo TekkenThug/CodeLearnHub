@@ -149,6 +149,7 @@ const sendRating = async(number) => {
 
     @include responsive($tablet)
         width: 100%
+        max-height: 340px
 
 .editor
     flex-grow: 1
