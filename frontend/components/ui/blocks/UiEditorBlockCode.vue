@@ -1,6 +1,6 @@
 <template>
     <code
-        :class="$style.header"
+        :class="$style.UiEditorBlockCode"
         v-html="code"
     />
 </template>
@@ -16,6 +16,7 @@ const props = defineProps({
 
 <style lang="sass" module>
 .UiEditorBlockCode
+    width: 100%
     padding: $offset-xs $offset-s
     background-color: $gray-50
     color: #000000
