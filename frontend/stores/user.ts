@@ -38,8 +38,11 @@ export const useUserStore = defineStore('user', () => {
 
     const logout = async() => {
         await http.post('/logout')
-        isAuth.value = false
-        user.value = null
+
+        setTimeout(() => {
+            isAuth.value = false
+            user.value = null
+        }, 500)
     }
 
     const getUserInfo = () => {
@@ -113,6 +116,6 @@ export const useUserStore = defineStore('user', () => {
         updateUserData,
         deleteUser,
         uploadAvatar,
-        getNews,
+        getNews
     }
 })
