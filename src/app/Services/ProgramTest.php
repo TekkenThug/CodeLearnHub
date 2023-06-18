@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-use Illuminate\Support\Facades\Process;
+use Symfony\Component\Process\Process;
 
 class ProgramTest
 {
@@ -27,14 +27,14 @@ class ProgramTest
 		  }');
 
 		$command = 'jest' . ' ' . storage_path('app/' . $fileWithTest) . ' ' . '--config=' . storage_path('app/' . $testConfig);
-		// putenv('PATH=/root/.nvm/versions/node/v16.19.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin');
-		$process = Process::run('node -v');
-    // $process->run();
+		putenv('PATH=/root/.nvm/versions/node/v16.19.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin');
+		$process = new Process(['node', '-v']);
+    $process->run();
 
-		// $output = $process->getOutput();
-    // $error = $process->getErrorOutput();
+		$output = $process->getOutput();
+    $error = $process->getErrorOutput();
 
-		dd($process->output(), $process->errorOutput());
+		dd($output, $error);
 
 		Storage::disk('local')->delete($fileWithTest);
 		Storage::disk('local')->delete($testConfig);
