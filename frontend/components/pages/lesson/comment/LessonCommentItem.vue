@@ -48,7 +48,7 @@ const props = defineProps({
 
 const mappedDate = computed(() => {
     const date = new Date(props.date)
-    return `${date.toLocaleDateString()} ${date.toLocaleTimeString('ru-RU',{ hour: 'numeric', minute: 'numeric' })}`
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString('ru-RU', { hour: 'numeric', minute: 'numeric' })}`
 })
 </script>
 
