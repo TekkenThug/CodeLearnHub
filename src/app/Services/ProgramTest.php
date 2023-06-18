@@ -34,10 +34,7 @@ class ProgramTest
 		$output = $process->getOutput();
     $error = $process->getErrorOutput();
 
-		$processTwo = Process::fromShellCommandline('ls');
-		$processTwo->run();
-
-		dd($processTwo->getErrorOutput(), $processTwo->getOutput());
+		dd($output, $error);
 
 		Storage::disk('local')->delete($fileWithTest);
 		Storage::disk('local')->delete($testConfig);
