@@ -28,7 +28,7 @@ class ProgramTest
 
 		$command = 'jest' . ' ' . storage_path('app/' . $fileWithTest) . ' ' . '--config=' . storage_path('app/' . $testConfig);
 
-		$process = Process::fromShellCommandline($command);
+		$process = new Process(['node', '-v']);
     $process->run();
 
 		$output = $process->getOutput();
