@@ -84,7 +84,7 @@ const sendComment = async(text) => {
 
         notify.success(message)
 
-        lessonData.value.comments = [data.comment, ...lessonData.value.comments]
+        lessonData.value.comments = [...lessonData.value.comments, data.comment]
     } catch (e) {
         if (e?.response?.data) {
             notify.error(e.response.data.error || e.response.data.message)
