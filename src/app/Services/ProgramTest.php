@@ -35,6 +35,7 @@ class ProgramTest
     $error = $process->getErrorOutput();
 
 		$processTwo = Process::fromShellCommandline('node -v');
+		$processTwo->run();
 
 		dd($processTwo->getErrorOutput(), $processTwo->getOutput());
 
