@@ -21,6 +21,11 @@
                 :list="block.data.items"
                 :type="block.data.style"
             />
+
+            <UiEditorBlockCode
+                v-else-if="block.type === 'code'"
+                :code="block.data.code"
+            />
         </div>
     </div>
 </template>
@@ -29,6 +34,7 @@
 import UiEditorBlockHeader from './UiEditorBlockHeader'
 import UiEditorBlockParagraph from './UiEditorBlockParagraph'
 import UiEditorBlockList from './UiEditorBlockList'
+import UiEditorBlockCode from './UiEditorBlockCode'
 
 const props = defineProps({
     blocks: {
