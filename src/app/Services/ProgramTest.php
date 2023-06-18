@@ -33,8 +33,6 @@ class ProgramTest
 		$output = $process->getOutput();
     $error = $process->getErrorOutput();
 
-		dd($output, $error);
-
 		Storage::disk('local')->delete($fileWithTest);
 		Storage::disk('local')->delete($testConfig);
 
