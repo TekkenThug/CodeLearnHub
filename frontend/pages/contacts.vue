@@ -7,7 +7,7 @@
 
             <ul :class="$style.contacts">
                 <li>
-                    <strong>E-mail:</strong> <span>admin@gmail.com</span>
+                    <strong>E-mail:</strong> <span>ignatov0131@gmail.com</span>
                 </li>
             </ul>
 
