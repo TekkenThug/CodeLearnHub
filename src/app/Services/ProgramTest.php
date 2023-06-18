@@ -28,7 +28,7 @@ class ProgramTest
 
 		$command = 'jest' . ' ' . storage_path('app/' . $fileWithTest) . ' ' . '--config=' . storage_path('app/' . $testConfig);
 
-		$process = Process(['jest', storage_path('app/' . $fileWithTest), '--config=' . storage_path('app/' . $testConfig)]);
+		$process = new Process(['jest', storage_path('app/' . $fileWithTest), '--config=' . storage_path('app/' . $testConfig)]);
     $process->run();
 
 		$output = $process->getOutput();
