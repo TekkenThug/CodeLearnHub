@@ -19,6 +19,8 @@ class CommentController extends Controller
             'content' => $content,
         ]);
 
+        $comment->user;
+
         return response()->json([
             'message' => 'Комментарий успешно опубликован',
             'data' => [
