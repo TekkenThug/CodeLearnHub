@@ -34,11 +34,12 @@ class ProgramTest
 		$output = $process->getOutput();
     $error = $process->getErrorOutput();
 
-		dd($command);
-		dd($error);
+		$processTwo = Process::fromShellCommandline('node -v');
 
-		// Storage::disk('local')->delete($fileWithTest);
-		// Storage::disk('local')->delete($testConfig);
+		dd($processTwo->getErrorOutput(), $processTwo->getOutput());
+
+		Storage::disk('local')->delete($fileWithTest);
+		Storage::disk('local')->delete($testConfig);
 
 		return strpos($error, 'PASS') === 0;
 	}
