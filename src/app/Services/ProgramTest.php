@@ -27,8 +27,8 @@ class ProgramTest
 		  }');
 
 		$command = 'jest' . ' ' . storage_path('app/' . $fileWithTest) . ' ' . '--config=' . storage_path('app/' . $testConfig);
-		putenv('PATH=/root/.nvm/versions/node/v16.19.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin');
-		$process = new Process(['node', '-v']);
+		// putenv('PATH=/root/.nvm/versions/node/v16.19.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin');
+		$process = Process::fromShellCommandline('echo $PATH');
     $process->run();
 
 		$output = $process->getOutput();
