@@ -42,7 +42,7 @@ export const useUserStore = defineStore('user', () => {
         setTimeout(() => {
             isAuth.value = false
             user.value = null
-        }, 500)
+        }, 300)
     }
 
     const getUserInfo = () => {
