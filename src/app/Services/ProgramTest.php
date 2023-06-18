@@ -26,9 +26,9 @@ class ProgramTest
 			"verbose": true
 		  }');
 
-		$command = 'jest' . ' ' . storage_path('app/' . $fileWithTest) . ' ' . '--config='. storage_path('app/' . $testConfig);
+		$command = 'jest' . ' ' . storage_path('app/' . $fileWithTest) . ' ' . '--config=' . storage_path('app/' . $testConfig);
 
-		$process = Process::fromShellCommandline($command);
+		$process = Process(['jest', storage_path('app/' . $fileWithTest), '--config=' . storage_path('app/' . $testConfig)]);
     $process->run();
 
 		$output = $process->getOutput();
