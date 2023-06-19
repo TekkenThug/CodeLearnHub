@@ -73,7 +73,7 @@ const columns = computed(() => {
                     link: '/contacts'
                 },
 
-                ...(user.isAuth ? [{ title: 'Стать автором', link: '/courses/create' }] : [])
+                ...(user.isAuth ? [{ title: 'Создать курс', link: '/courses/create' }] : [])
             ]
         }
     ]
