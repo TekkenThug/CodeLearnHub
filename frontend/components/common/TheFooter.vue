@@ -54,34 +54,42 @@
 
 <script setup>
 import { useCourseStore } from '~/stores/course'
+import { useUserStore } from '~/stores/user'
 
 const courseStore = useCourseStore()
-const columns = computed(() => ([
-    {
-        title: 'Полезное',
-        items: [
-            {
-                title: 'Новости',
-                link: '/updates'
-            },
-            {
-                title: 'Контакты',
-                link: '/contacts'
-            },
-            {
-                title: 'Стать автором',
-                link: '/courses/create'
-            }
-        ]
-    },
-    {
-        title: 'Курсы',
-        items: [...courseStore.popularCourses.map(item => ({
-            link: `/courses/${item.id}`,
-            title: item.name
-        }))]
+const user = useUserStore()
+
+const columns = computed(() => {
+    const arr = [
+        {
+            title: 'Полезное',
+            items: [
+                {
+                    title: 'Новости',
+                    link: '/updates'
+                },
+                {
+                    title: 'Контакты',
+                    link: '/contacts'
+                },
+
+                ...(user.isAuth ? { title: 'Стать автором', link: '/courses/create' } : {})
+            ]
+        }
+    ]
+
+    if (courseStore.popularCourses && courseStore.popularCourses.length) {
+        arr.push({
+            title: 'Курсы',
+            items: [...courseStore.popularCourses.map(item => ({
+                link: `/courses/${item.id}`,
+                title: item.name
+            }))]
+        })
     }
-]))
+
+    return arr
+})
 
 const socialLinks = ref([
     {
