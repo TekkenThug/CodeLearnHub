@@ -45,7 +45,7 @@ const { closeAll } = useVfm()
   background: $white
   border-radius: 10px
   overflow: hidden
-  min-height: 425px
+  min-height: 440px
 
   &__content
     position: relative
