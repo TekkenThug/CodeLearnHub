@@ -33,6 +33,17 @@
                 :error-message="errors.password"
             />
 
+            <UiCheckbox
+                v-model="isAgreeForPolicy"
+                class="auth-modal__form-input"
+            >
+                Я согласен с
+                <a href="/personal-policy" class="link">
+                    политикой обработки персональных данных
+                </a>
+                и даю согласие на обработку
+            </UiCheckbox>
+
             <UiButton class="auth-modal__submit" :disabled="buttonIsDisabled">
                 Регистрация
             </UiButton>
@@ -56,6 +67,7 @@ import {
     EMAIL_ERROR,
     PASSSWORD_ERROR
 } from '~/utils/data/validateErrors'
+import UiCheckbox from '~/components/ui/checkbox/UiCheckbox.vue'
 
 const emit = defineEmits<{(e: 'changeMode', value: 'login'): void }>()
 
@@ -73,7 +85,8 @@ const { handleSubmit, errors } = useForm({ validationSchema })
 const { value: nickname } = useField<string>('nickname', 'isRequired', { validateOnValueUpdate: false })
 const { value: email } = useField<string>('email', 'isRequired', { validateOnValueUpdate: false })
 const { value: password } = useField<string>('password', 'isRequired', { validateOnValueUpdate: false })
-const buttonIsDisabled = computed(() => !nickname.value || !email.value || !password.value)
+const isAgreeForPolicy = ref(false)
+const buttonIsDisabled = computed(() => !nickname.value || !email.value || !password.value || !isAgreeForPolicy.value)
 const submitForm = handleSubmit((values) => {
     isLoading.value = true
 
