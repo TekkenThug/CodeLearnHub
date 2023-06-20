@@ -3,7 +3,7 @@
         v-if="isAuth"
         v-model:shown="isMenuShown"
         :distance="6"
-        :auto-hide="true"
+        :auto-hide="false"
         placement="bottom-end"
         :class="$style.HeaderPopover"
     >
